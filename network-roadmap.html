@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking Roadmap // dr4g0n-r04dm4p</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Cinzel:wght@700;900&display=swap');
+  :root{
+    --bg:#0a0705; --bg-alt:#130d0a; --bg-card:#160f0b; --line:#2a1c14;
+    --ember:#ff6a2b; --crimson:#c81d25; --gold:#d4a017;
+    --text:#ecdfd1; --text-dim:#9c8a78; --text-dimmer:#6e5f52;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:
+      radial-gradient(ellipse 70% 30% at 50% 0%, rgba(212,160,23,.08), transparent 70%), var(--bg);
+    color:var(--text); font-family:'JetBrains Mono', monospace; line-height:1.5;
+    padding-bottom:6rem;
+  }
+  a{color:var(--gold);}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,7,5,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:.9rem 1.5rem;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none;}
+  .brand .dot{color:var(--gold);}
+  .brand span{font-family:'Cinzel', serif; font-weight:900; letter-spacing:.03em; font-size:1.05rem; color:var(--text);}
+  header .meta{font-size:.72rem; color:var(--text-dim); letter-spacing:.08em;}
+  header .meta a{color:var(--ember); text-decoration:none;}
+  .back{
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+    color:var(--text-dim); border:1px solid var(--line); padding:.4rem .8rem; border-radius:4px; transition:.2s;
+  }
+  .back:hover{color:var(--gold); border-color:var(--gold);}
+
+  .hero{padding:4.5rem 1.5rem 2.5rem; text-align:center; max-width:820px; margin:0 auto;}
+  .hero .eyebrow{font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .hero h1{
+    font-family:'Cinzel', serif; font-weight:900; font-size:clamp(1.8rem,5vw,3rem);
+    background:linear-gradient(120deg, var(--gold), var(--ember) 55%, var(--crimson));
+    -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.2; margin-bottom:1rem;
+  }
+  .hero p{color:var(--text-dim); font-size:.9rem; max-width:640px; margin:0 auto;}
+  .hero .stats{display:flex; justify-content:center; gap:2.2rem; margin-top:2rem; flex-wrap:wrap;}
+  .hero .stats div{text-align:center;}
+  .hero .stats b{display:block; font-size:1.4rem; color:var(--gold); font-family:'Cinzel',serif;}
+  .hero .stats span{font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dimmer);}
+
+  .controls{max-width:900px; margin:0 auto 2rem; padding:0 1.5rem; display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center;}
+  .controls button{
+    font-family:inherit; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--bg-alt); color:var(--text-dim); border:1px solid var(--line);
+    padding:.5rem 1rem; border-radius:4px; cursor:pointer; transition:.2s;
+  }
+  .controls button:hover{color:var(--gold); border-color:var(--gold);}
+  #search{
+    font-family:inherit; background:var(--bg-alt); border:1px solid var(--line); color:var(--text);
+    padding:.5rem 1rem; border-radius:4px; font-size:.78rem; min-width:220px; flex:1; max-width:320px;
+  }
+  #search::placeholder{color:var(--text-dimmer);}
+
+  .toc{max-width:900px; margin:0 auto 3rem; padding:1.4rem 1.6rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:8px;}
+  .toc h3{font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .toc-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:.4rem .8rem;}
+  .toc-grid a{font-size:.78rem; color:var(--text-dim); text-decoration:none; display:flex; gap:.5rem; padding:.25rem 0; transition:.15s;}
+  .toc-grid a:hover{color:var(--gold);}
+  .toc-grid a b{color:var(--ember); font-weight:700;}
+
+  main{max-width:900px; margin:0 auto; padding:0 1.5rem;}
+  .part{margin-bottom:2.6rem; scroll-margin-top:5rem;}
+  .part-head{
+    display:flex; align-items:baseline; gap:1rem; padding:1rem 1.2rem;
+    background:linear-gradient(90deg, var(--bg-card), transparent);
+    border-left:3px solid var(--gold); border-radius:4px; margin-bottom:.8rem;
+  }
+  .part-head .letter{font-family:'Cinzel',serif; font-size:1.6rem; color:var(--gold); font-weight:900; opacity:.8;}
+  .part-head h2{font-size:1.1rem; color:var(--text); letter-spacing:.02em;}
+  .part-sub{color:var(--text-dimmer); font-size:.78rem; margin:0 0 .8rem 3.4rem; font-style:italic;}
+
+  details.section{border:1px solid var(--line); border-radius:6px; margin-bottom:.55rem; background:var(--bg-alt); overflow:hidden;}
+  details.section[open]{border-color:#3a2418;}
+  details.section summary{
+    cursor:pointer; list-style:none; padding:.75rem 1.1rem; display:flex; align-items:center; gap:.7rem;
+    font-size:.85rem; color:var(--text); font-weight:500; -webkit-tap-highlight-color:transparent;
+  }
+  details.section summary::-webkit-details-marker{display:none;}
+  details.section summary::before{content:'▸'; color:var(--ember); font-size:.75rem; transition:transform .2s; flex-shrink:0;}
+  details.section[open] summary::before{transform:rotate(90deg);}
+  details.section summary .code{color:var(--gold); font-size:.72rem; opacity:.75;}
+  .section-body{padding:.2rem 1.3rem 1rem 2.5rem;}
+  .section-body ul{list-style:none;}
+  .section-body > ul > li{position:relative; padding:.28rem 0 .28rem 1rem; font-size:.82rem; color:var(--text-dim); border-left:1px solid var(--line); margin-left:.1rem;}
+  .section-body > ul > li::before{content:''; position:absolute; left:-4px; top:1rem; width:7px; height:1px; background:var(--line);}
+  .section-body ul li ul{margin:.35rem 0 .35rem .4rem; padding-left:1rem; border-left:1px dashed var(--line);}
+  .section-body ul li ul li{font-size:.78rem; color:var(--text-dimmer); padding:.18rem 0;}
+  .section-body p{font-size:.83rem; color:var(--text-dim); margin-bottom:.7rem;}
+  .section-body p strong{color:var(--text);}
+  .section-body .label{font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--ember); margin:.9rem 0 .35rem;}
+
+  table{width:100%; border-collapse:collapse; font-size:.78rem; margin-bottom:.4rem;}
+  table caption{text-align:left; color:var(--gold); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem;}
+  th,td{padding:.5rem .6rem; border:1px solid var(--line); text-align:left; vertical-align:top;}
+  th{background:var(--bg-card); color:var(--gold); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;}
+  td{color:var(--text-dim);}
+  td b{color:var(--text);}
+
+  .device-card{border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.3rem; margin-bottom:.9rem; background:var(--bg-card);}
+  .device-card h4{color:var(--ember); font-size:.95rem; margin-bottom:.5rem; font-family:'Cinzel',serif;}
+  .device-card p{font-size:.82rem; color:var(--text-dim); margin-bottom:.6rem;}
+  .device-card .label{font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin:.7rem 0 .3rem;}
+  .device-card ul{list-style:none; padding-left:0;}
+  .device-card ul li{font-size:.78rem; color:var(--text-dim); padding:.15rem 0 .15rem 1rem; position:relative;}
+  .device-card ul li::before{content:'—'; position:absolute; left:0; color:var(--text-dimmer);}
+
+  footer{text-align:center; color:var(--text-dimmer); font-size:.68rem; letter-spacing:.1em; margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line);}
+  footer .fire{color:var(--gold);}
+  .hidden{display:none !important;}
+  @media (max-width:600px){ .hero{padding:3rem 1rem 2rem;} .toc-grid{grid-template-columns:1fr;} .section-body{padding-left:1.4rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html"><span class="dot">🐉</span><span>VT Dr4g0n</span></a>
+  <div class="meta">@<a href="https://instagram.com/vt_dr4g0n" target="_blank" rel="noopener">vt_dr4g0n</a> — dr4g0n-r04dm4p</div>
+  <a class="back" href="index.html">← Back to hub</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Track 02</div>
+  <h1>Networking Roadmap</h1>
+  <p>From IP addressing to enterprise & cloud networking, CLI toolcraft, MITM, monitoring, and the full certification path. Every phase, device, and concept — nothing cut.</p>
+  <div class="stats">
+    <div><b id="statParts">8</b><span>Parts</span></div>
+    <div><b id="statSections">0</b><span>Sections</span></div>
+    <div><b id="statTopics">0</b><span>Topics</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="Search a protocol, device, tool, phase…">
+  <button id="expandAll">Expand all</button>
+  <button id="collapseAll">Collapse all</button>
+</div>
+
+<div class="toc" id="toc">
+  <h3>Jump to part</h3>
+  <div class="toc-grid" id="tocGrid"></div>
+</div>
+
+<main id="main"></main>
+
+<footer>8 parts · IP addressing to enterprise networking · <span class="fire">dr4g0n-r04dm4p</span> · network-roadmap.html</footer>
+
+<script>
+// ---------- helpers ----------
+function itemHTML(item){
+  if(typeof item === 'string') return `<li>${item}</li>`;
+  const subs = item.sub.map(s=>`<li>${s}</li>`).join('');
+  return `<li>${item.t}<ul>${subs}</ul></li>`;
+}
+function listBlock(items){ return `<ul>${items.map(itemHTML).join('')}</ul>`; }
+function textBlock(paras){ return paras.map(p=>`<p>${p}</p>`).join(''); }
+function tableBlock(tbl){
+  const head = `<tr>${tbl.headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const rows = tbl.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+  return `<table>${tbl.caption?`<caption>${tbl.caption}</caption>`:''}${head}${rows}</table>`;
+}
+function deviceCard(d){
+  return `<div class="device-card">
+    <h4>${d.name}</h4>
+    ${textBlock(d.def)}
+    <div class="label">Functions</div><ul>${d.functions.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Advantages</div><ul>${d.advantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Disadvantages</div><ul>${d.disadvantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Real-World Example</div><p>${d.example}</p>
+  </div>`;
+}
+
+// renders a section body from its "kind"
+function bodyHTML(sec){
+  if(sec.kind === 'table') return tableBlock(sec.table);
+  if(sec.kind === 'tables') return sec.tables.map(tableBlock).join('<div style="height:1rem"></div>');
+  if(sec.kind === 'devices') return sec.devices.map(deviceCard).join('');
+  if(sec.kind === 'text') return textBlock(sec.paras) + (sec.list ? listBlock(sec.list) : '');
+  return listBlock(sec.i || []);
+}
+function topicCountOf(sec){
+  if(sec.kind === 'table') return sec.table.rows.length;
+  if(sec.kind === 'tables') return sec.tables.reduce((a,t)=>a+t.rows.length,0);
+  if(sec.kind === 'devices') return sec.devices.length;
+  if(sec.kind === 'text') return (sec.list ? sec.list.length : sec.paras.length);
+  return (sec.i || []).length;
+}
+
+// ---------- DATA ----------
+const PARTS = [
+
+{ id:1, title:"Core IP Addressing & Routing Concepts", sec:[
+  { t:"IPv4 Addressing", kind:'text', paras:[
+    "<strong>IPv4 (Internet Protocol Version 4)</strong> is the fourth version of the Internet Protocol and the most widely used addressing system. It uses <strong>32-bit addresses</strong>, allowing approximately <strong>4.3 billion unique IP addresses</strong>. Every device connected to a network must have a unique IPv4 address for communication.",
+    "IPv4 addresses are written in <strong>dotted-decimal notation</strong>, consisting of four octets separated by periods. Each octet ranges from <strong>0 to 255</strong>. Although IPv4 remains the standard for most networks, the limited number of available addresses has led to the development and adoption of IPv6."
+  ]},
+  { t:"IPv6 Addressing", kind:'text', paras:[
+    "<strong>IPv6 (Internet Protocol Version 6)</strong> is the latest version of the Internet Protocol, developed to overcome the address exhaustion problem of IPv4. It uses <strong>128-bit addresses</strong>, providing an enormous number of unique IP addresses to support the growing number of Internet-connected devices.",
+    "IPv6 addresses are written in <strong>hexadecimal notation</strong> and separated by colons. In addition to a larger address space, IPv6 offers simplified routing, automatic address configuration, improved efficiency, and built-in support for modern networking technologies."
+  ]},
+  { t:"Subnetting", kind:'text', paras:[
+    "<strong>Subnetting</strong> is the process of dividing a large network into smaller logical networks called <strong>subnets</strong>. This technique improves network organization, enhances security, reduces broadcast traffic, and allows more efficient utilization of IP addresses.",
+    "By separating networks into smaller segments, subnetting makes network management easier, improves overall performance, and isolates network issues or security risks."
+  ]},
+  { t:"CIDR (Classless Inter-Domain Routing)", kind:'text', paras:[
+    "<strong>CIDR (Classless Inter-Domain Routing)</strong> is an IP addressing method that replaces the traditional class-based addressing system. Instead of fixed network classes, CIDR uses variable-length prefixes to allocate IP addresses more efficiently.",
+    "CIDR reduces IP address wastage, simplifies routing, minimizes routing table size, and allows Internet Service Providers (ISPs) and organizations to allocate address blocks based on actual requirements."
+  ]},
+  { t:"Routing Basics", kind:'text', paras:[
+    "<strong>Routing</strong> is the process of forwarding data packets from a source network to a destination network through one or more routers. Routers examine destination IP addresses and use routing tables to determine the best available path for packet delivery.",
+    "Routing is essential for communication between different networks, including communication across the Internet. It can be performed manually using static routes or automatically using dynamic routing protocols."
+  ], list:["Static Routing","Dynamic Routing","Default Routing"]},
+  { t:"NAT (Network Address Translation)", kind:'text', paras:[
+    "<strong>Network Address Translation (NAT)</strong> is a networking technique that translates private IP addresses into public IP addresses. It allows multiple devices within a private network to share a single public IP address when accessing the Internet.",
+    "NAT conserves public IPv4 addresses, hides internal network addresses from external networks, improves network security, and enables organizations to use private IP addressing while maintaining Internet connectivity."
+  ], list:["Static NAT","Dynamic NAT","PAT (Port Address Translation)"]}
+]},
+
+{ id:2, title:"Network Architecture", sec:[
+  { t:"1.1 Network Models", i:[
+    {t:"LAN (Local Area Network) — a small network that connects devices within a limited area like a home, office, or lab.", sub:["High speed communication","Low latency","Privately managed","Example: Office Wi-Fi network"]},
+    {t:"WAN (Wide Area Network) — connects multiple LANs across large geographic areas like cities or countries.", sub:["Uses public or leased communication lines","Higher latency compared to LAN","Example: Internet"]},
+    {t:"MAN (Metropolitan Area Network) — covers a city or large campus area.", sub:["Larger than LAN, smaller than WAN","Example: City-wide ISP network"]},
+    {t:"Hybrid Network — a combination of LAN, MAN, and WAN networks.", sub:["Used in large enterprises","Flexible and scalable architecture"]}
+  ]},
+  { t:"1.2 OSI Model", kind:'text', paras:["The OSI (Open Systems Interconnection) model defines how data moves through a network in 7 layers."], list:[
+    "1. Physical Layer → Cables, signals","2. Data Link Layer → MAC addresses, switching","3. Network Layer → IP addressing, routing",
+    "4. Transport Layer → TCP/UDP communication","5. Session Layer → Session management","6. Presentation Layer → Data formatting, encryption",
+    "7. Application Layer → User-level applications (HTTP, FTP)"
+  ]},
+  { t:"1.3 TCP/IP Model", kind:'text', paras:["A simplified model used in real-world networking."], list:[
+    "1. Network Access Layer → Physical + Data Link","2. Internet Layer → IP, routing","3. Transport Layer → TCP/UDP","4. Application Layer → HTTP, DNS, FTP"
+  ]},
+  { t:"1.4 Network Communication Flow", kind:'text', paras:["How data moves between two systems:"], list:[
+    "1. User sends request (Application Layer)","2. Data is broken into packets","3. Packets move through TCP/IP layers","4. Routed across networks using IP",
+    "5. Received by destination system","6. Data is reassembled","7. Delivered to application"
+  ]}
+]},
+
+{ id:3, title:"Network Security Certifications", sec:[
+  { t:"Entry Level", kind:'table', table:{caption:"Entry Level", headers:["Cert","Importance","Notes"], rows:[
+    ["ISC2 Certified in Cybersecurity (CC)","3","Free entry-level certification recognized globally"],
+    ["CompTIA Network+ (N10-009)","4","Industry-standard networking certification"],
+    ["Cisco CCNA (200-301 v1.2)","5","Most recognized networking certification"],
+    ["Fortinet Certified Associate (FCA)","3","Covers firewall and network security fundamentals"],
+    ["Juniper JNCIA-Junos","3","Juniper networking fundamentals"],
+    ["Microsoft SC-900","3","Microsoft security, compliance, and identity fundamentals"]
+  ]}},
+  { t:"Intermediate Level", kind:'table', table:{caption:"Intermediate Level", headers:["Cert","Importance","Notes"], rows:[
+    ["CompTIA Security+ (SY0-701)","5","One of the most requested security certifications"],
+    ["Cisco CyberOps Associate","4","SOC monitoring and incident response"],
+    ["Cisco CCNP Security","4","Enterprise network security technologies"],
+    ["Fortinet Certified Professional (FCP - Network Security)","4","Advanced FortiGate firewall administration"],
+    ["Palo Alto PCNSA","4","Palo Alto firewall administration"],
+    ["EC-Council Certified Network Defender (CND)","4","Defensive network security and hardening"],
+    ["Microsoft AZ-700","4","Azure networking and hybrid connectivity"]
+  ]}},
+  { t:"Advanced Level", kind:'table', table:{caption:"Advanced Level", headers:["Cert","Importance","Notes"], rows:[
+    ["Palo Alto PCNSE","5","Enterprise firewall engineering and troubleshooting"],
+    ["AWS Advanced Networking – Specialty","5","Advanced AWS networking and hybrid cloud"],
+    ["GIAC Security Essentials (GSEC)","4","Enterprise security and networking"],
+    ["GIAC Certified Intrusion Analyst (GCIA)","4","IDS, packet analysis, and intrusion detection"],
+    ["GIAC Certified Incident Handler (GCIH)","4","Incident response and attack handling"],
+    ["CISSP (ISC2)","5","Global standard for security professionals"],
+    ["CCSP (ISC2)","4","Cloud security architecture and operations"],
+    ["CISM (ISACA)","4","Security management and governance"]
+  ]}}
+]},
+
+{ id:4, title:"Network Connections", sec:[
+  { t:"3.1 Wired Networks", kind:'text', paras:["Wired networks use physical cables to connect devices."], list:["Ethernet (most common)","Fiber Optic (high speed, long distance)","Stable connection","High speed","Low interference","Requires physical setup"]},
+  { t:"3.2 Wireless Networks", kind:'text', paras:["Wireless networks use radio signals instead of cables."], list:["Wi-Fi","Bluetooth","Mobile networks (4G/5G)","Flexible mobility","Easy setup","Can be affected by interference and range limits"]},
+  { t:"3.3 VPN (Virtual Private Network)", kind:'text', paras:["A VPN creates a secure encrypted tunnel over a public network."], list:["Hides user IP address","Encrypts data traffic","Used for privacy and secure communication","Use case: Secure remote access","Use case: Bypassing restrictions","Use case: Safe browsing on public networks"]},
+  { t:"3.4 VLAN (Virtual Local Area Network)", kind:'text', paras:["A VLAN logically divides a physical network into multiple virtual networks."], list:["Improves network segmentation","Enhances security","Reduces broadcast traffic","Example: HR department network separated from IT department on same physical switch"]},
+  { t:"3.5 Subnetting Basics", kind:'text', paras:["Subnetting divides a large network into smaller networks.","<strong>Why Subnetting?</strong> Efficient IP usage, better network performance, improved security isolation."], list:["Key concept: IP Address","Key concept: Subnet Mask","Key concept: Network ID","Key concept: Host ID","Example split: Subnet A (HR)","Example split: Subnet B (Finance)","Example split: Subnet C (IT)"]}
+]},
+
+{ id:5, title:"Network Devices — Deep Dive", sec:[
+  { t:"Router, Switch, Firewall, IDS, IPS, Access Point, Load Balancer", kind:'devices', devices:[
+    { name:"Router (Layer 3)", def:["A <strong>Router</strong> is a Layer 3 (Network Layer) networking device that connects two or more different networks and forwards data packets between them using IP addresses. It determines the best path for data to travel from the source network to the destination network.","Routers are commonly used to connect Local Area Networks (LANs) to Wide Area Networks (WANs), such as the Internet."],
+      functions:["Connects different networks together.","Uses IP addresses to forward packets.","Selects the best route using routing tables.","Enables communication between LAN and Internet.","Supports Network Address Translation (NAT).","Can provide DHCP services.","Helps reduce unnecessary network traffic."],
+      advantages:["Connects multiple networks.","Improves network management.","Provides Internet connectivity.","Supports advanced security features.","Can connect wired and wireless networks."],
+      disadvantages:["More expensive than switches.","Configuration can be complex.","Packet forwarding is slower than switching."],
+      example:"A home Wi-Fi router connects all devices in your house to your Internet Service Provider (ISP), allowing users to browse the Internet." },
+    { name:"Switch (Layer 2)", def:["A <strong>Switch</strong> is a Layer 2 (Data Link Layer) networking device that connects multiple devices within the same Local Area Network (LAN). It forwards data using MAC addresses, ensuring that data reaches only the intended device.","Unlike hubs, switches reduce unnecessary traffic by sending frames only to the correct destination."],
+      functions:["Connects devices in a LAN.","Learns and stores MAC addresses.","Forwards data only to the destination device.","Reduces network collisions.","Improves network performance.","Supports VLANs in managed switches."],
+      advantages:["High-speed communication.","Efficient data forwarding.","Reduces collisions.","Better bandwidth utilization.","Easy to expand the network."],
+      disadvantages:["Cannot route traffic between different networks.","Managed switches require configuration.","More expensive than hubs."],
+      example:"A company uses a switch to connect computers, printers, IP phones, and servers within the same office." },
+    { name:"Firewall", def:["A <strong>Firewall</strong> is a network security device that monitors, filters, and controls incoming and outgoing network traffic based on predefined security rules. It acts as a barrier between trusted and untrusted networks.","Firewalls can be hardware-based, software-based, or cloud-based."],
+      functions:["Blocks unauthorized access.","Filters network traffic.","Monitors incoming and outgoing connections.","Prevents cyber attacks.","Controls access based on security policies.","Logs network activities."],
+      advantages:["Improves network security.","Prevents unauthorized access.","Protects against malware.","Helps enforce organizational security policies.","Monitors suspicious traffic."],
+      disadvantages:["Incorrect configuration may block legitimate traffic.","Cannot stop every type of cyber attack.","May introduce slight network latency."],
+      example:"A company firewall blocks malicious traffic from the Internet while allowing employees to securely access business applications." },
+    { name:"IDS (Intrusion Detection System)", def:["An <strong>Intrusion Detection System (IDS)</strong> continuously monitors network traffic and system activities to identify suspicious behavior, security policy violations, or cyber attacks. IDS only detects threats and generates alerts; it does not block them."],
+      functions:["Monitors network traffic.","Detects suspicious activities.","Generates security alerts.","Records attack logs.","Helps security teams investigate incidents."],
+      advantages:["Early threat detection.","Improves network visibility.","Assists in security monitoring.","Provides detailed attack logs."],
+      disadvantages:["Does not stop attacks automatically.","Can generate false positives.","Requires continuous monitoring."],
+      example:"An IDS detects repeated login attempts from an unknown IP address and alerts the security administrator." },
+    { name:"IPS (Intrusion Prevention System)", def:["An <strong>Intrusion Prevention System (IPS)</strong> detects malicious activities like an IDS but also takes automatic action to prevent attacks by blocking malicious traffic in real time."],
+      functions:["Detects attacks.","Blocks malicious packets.","Prevents exploitation.","Stops known vulnerabilities.","Protects critical systems."],
+      advantages:["Automatic threat prevention.","Reduces attack impact.","Improves overall network security.","Responds in real time."],
+      disadvantages:["Incorrect rules may block legitimate traffic.","Requires frequent updates.","Can slightly affect network performance."],
+      example:"An IPS automatically blocks an attacker attempting to exploit a known web server vulnerability." },
+    { name:"Access Point (AP)", def:["An <strong>Access Point (AP)</strong> is a networking device that provides wireless connectivity by allowing Wi-Fi-enabled devices to connect to a wired network. It extends network coverage and enables multiple wireless users to access the network simultaneously."],
+      functions:["Provides Wi-Fi connectivity.","Extends wireless coverage.","Connects wireless devices to LAN.","Supports multiple users.","Improves wireless network availability."],
+      advantages:["Wireless mobility.","Easy device connectivity.","Supports many users.","Extends network coverage.","Simple installation."],
+      disadvantages:["Wireless interference.","Limited range.","Security must be properly configured."],
+      example:"A university installs multiple access points throughout the campus to provide Wi-Fi access for students and faculty." },
+    { name:"Load Balancer", def:["A <strong>Load Balancer</strong> is a networking device or software that distributes incoming client requests across multiple servers. This ensures no single server becomes overloaded and improves application performance, scalability, and availability."],
+      functions:["Distributes network traffic.","Prevents server overload.","Improves application performance.","Ensures high availability.","Supports failover if a server becomes unavailable."],
+      advantages:["Better performance.","High availability.","Improved scalability.","Increased reliability.","Better user experience."],
+      disadvantages:["Additional deployment cost.","Requires proper configuration.","Can become a single point of failure if not deployed redundantly."],
+      example:"Large websites such as Amazon, Netflix, and Google use load balancers to distribute millions of user requests across multiple servers, ensuring fast response times and continuous service." }
+  ]}
+]},
+
+{ id:6, title:"SkillMate — Network Security Learning Pathway (Phase 0–44)", note:"Learn Networking → Understand Security → Practice in Labs → Solve Challenges → Prepare for Certifications → Become Job Ready", sec:[
+  { t:"Phase 0 — Welcome", i:["Introduction to Network Security","How to use this pathway","Career Roadmap","Required Software","Lab Setup","Learning Methodology"]},
+  { t:"Phase 1 — Networking Fundamentals", i:["What is a Network?","Types of Networks","Network Topologies","OSI Model","TCP/IP Model","Data Encapsulation","Packet Flow","Network Communication","Bandwidth","Latency","MTU"]},
+  { t:"Phase 2 — Network Devices", i:["Router","Switch","Hub","Bridge","Repeater","Gateway","Firewall","Access Point","Modem","Load Balancer","IDS","IPS","🔧 Lab: Build Your First Network"]},
+  { t:"Phase 3 — IP Addressing", i:["IPv4","IPv6","MAC Address","Public & Private IP","CIDR","Subnetting","Supernetting","NAT","PAT","🔧 Lab: Subnetting Labs"]},
+  { t:"Phase 4 — Network Protocols", i:["ARP","ICMP","TCP","UDP","DNS","DHCP","HTTP","HTTPS","FTP","SSH","SMTP","POP3","IMAP","SNMP","LDAP","SMB","RDP","🔧 Lab: Packet Analysis Labs"]},
+  { t:"Phase 5 — Network Services", i:["DNS","DHCP","NTP","Proxy","VPN","Directory Services"]},
+  { t:"Phase 6 — Routing & Switching", i:["Routing Basics","Static Routing","Dynamic Routing","OSPF","BGP","VLAN","STP","RSTP","EtherChannel","🔧 Lab: Cisco Packet Tracer Labs"]},
+  { t:"Phase 7 — Network Security Fundamentals", i:["CIA Triad","AAA","Authentication","Authorization","Accounting","Least Privilege","Zero Trust","Network Segmentation","Defense in Depth","Security Policies"]},
+  { t:"Phase 8 — Firewalls", i:["Packet Filtering","Stateful Firewall","NGFW","WAF","ACL","Firewall Rules","Firewall Policies","🔧 Lab: Configure Firewall Rules"]},
+  { t:"Phase 9 — VPN & Remote Access", i:["VPN Basics","IPSec","SSL VPN","Site-to-Site VPN","Remote Access VPN","Split Tunnel","Full Tunnel"]},
+  { t:"Phase 10 — Wireless Security", i:["Wi-Fi Basics","WPA2","WPA3","Enterprise Wi-Fi","Rogue AP","Evil Twin","Deauthentication Attack"]},
+  { t:"Phase 11 — Network Attacks", i:["ARP Spoofing","DNS Poisoning","MAC Flooding","MITM","VLAN Hopping","DHCP Starvation","Session Hijacking","DDoS","Packet Sniffing"]},
+  { t:"Phase 12 — Wireshark", i:["Installation","Packet Capture","Filters","TCP Analysis","DNS Analysis","HTTP Analysis","Troubleshooting","Enterprise Investigation"]},
+  { t:"Phase 13 — Network Scanning & Enumeration", note:"Discover hosts, identify open ports, detect running services, fingerprint operating systems, and perform large-scale network scanning.", tools:["Nmap","Masscan"], i:["Installation","Host Discovery","Port Scanning","Service Detection","Version Detection","NSE (Nmap Scripting Engine)","OS Detection","Host Enumeration","Banner Grabbing","Scan Optimization","Timing Templates","Firewall Evasion Basics","Output Formats","Scan Analysis"]},
+  { t:"Phase 14 — Network Traffic Analysis", note:"Capture, filter, inspect, and analyze network packets for troubleshooting and security analysis.", tools:["tcpdump","TShark"], i:["Packet Capturing","Capture Filters","Display Filters","Exporting PCAP Files","Packet Inspection","Protocol Analysis","Traffic Analysis","Flow Analysis","Network Troubleshooting","Command-Line Packet Analysis"]},
+  { t:"Phase 15 — Network Connectivity & Troubleshooting", note:"Test connectivity, verify communication, and troubleshoot network issues.", tools:["Ping","Traceroute","Netcat"], i:["ICMP","Connectivity Testing","Latency Testing","Packet Loss Analysis","Route Discovery","Hop Analysis","Banner Grabbing","TCP Client & Server","UDP Communication","File Transfer","Port Testing","Network Troubleshooting"]},
+  { t:"Phase 16 — DNS Analysis & Troubleshooting", note:"How the Domain Name System works and how to query DNS servers.", tools:["nslookup","dig"], i:["DNS Queries","Forward Lookup","Reverse Lookup","A Records","AAAA Records","MX Records","TXT Records","NS Records","CNAME Records","SOA Records","Advanced Queries","DNS Troubleshooting"]},
+  { t:"Phase 17 — Network Interface & Socket Management", note:"Configure network interfaces, manage routes, inspect sockets, and monitor active connections.", tools:["ip","ifconfig","netstat","ss","arp"], i:["Interface Management","IP Address Configuration","Routing Tables","Default Gateway","ARP Cache","Socket Analysis","Active Connections","Listening Ports","Process Mapping","Network Statistics","Interface Monitoring"]},
+  { t:"Phase 18 — Web Communication & File Transfer", note:"Communicate with web servers, test APIs, and automate downloads.", tools:["curl","wget"], i:["HTTP Requests","HTTPS Requests","REST APIs","HTTP Methods","Request Headers","Authentication","Cookies","File Downloads","Resume Downloads","Automation","Script Integration"]},
+  { t:"Phase 19 — Encryption & Network Performance", note:"The basics of encryption, SSL/TLS certificates, and network performance testing.", tools:["OpenSSL","iperf3"], i:["SSL/TLS","X.509 Certificates","Certificate Inspection","Public & Private Keys","Encryption","Hashing","CSR Generation","Bandwidth Testing","Throughput Analysis","Latency Measurement","Network Performance Analysis"]},
+  { t:"Phase 20 — Packet Crafting & Automation", note:"Build, modify, send, receive, and automate custom network packets.", tools:["Scapy"], i:["Packet Crafting","Packet Sniffing","Packet Injection","Packet Manipulation","Custom Protocols","Network Automation","Python Scripting","Security Testing","Protocol Analysis"]},
+  { t:"Phase 21 — Man-in-the-Middle (MITM) & Network Attacks", note:"How interception attacks work in authorized lab environments.", tools:["Bettercap","Ettercap"], i:["MITM Fundamentals","Network Discovery","ARP Spoofing","DNS Spoofing","Packet Forwarding","Packet Injection","Credential Capture (Lab)","Traffic Interception","Session Analysis","Network Reconnaissance"]},
+  { t:"Phase 22 — Web Server Security Assessment", note:"Identify web server vulnerabilities and security misconfigurations.", tools:["Nikto"], i:["Web Server Scanning","Vulnerability Detection","Misconfiguration Detection","SSL Testing","CGI Enumeration","Security Headers","Report Generation","Web Security Assessment"]},
+  { t:"Phase 23 — Network Monitoring & Intrusion Detection", note:"How organizations monitor network traffic and detect malicious activity.", tools:["Zeek","Snort","Suricata"], i:["Network Monitoring","Network Security Monitoring (NSM)","Intrusion Detection Systems (IDS)","Intrusion Prevention Systems (IPS)","Signature-Based Detection","Rule Creation","Protocol Analysis","Threat Detection","Alert Generation","Log Analysis","Event Correlation","Network Forensics"]},
+  { t:"Phase 24 — ARP Tool", i:["Cache","Troubleshooting"]},
+  { t:"Phase 25 — curl", i:["HTTP Requests","APIs","Testing"]},
+  { t:"Phase 26 — wget", i:["Downloads","Automation"]},
+  { t:"Phase 27 — OpenSSL", i:["Certificates","TLS","Encryption"]},
+  { t:"Phase 28 — iperf3", i:["Bandwidth Testing","Performance Analysis"]},
+  { t:"Phase 29 — TShark", i:["CLI Packet Analysis"]},
+  { t:"Phase 30 — Scapy", i:["Packet Crafting","Packet Automation"]},
+  { t:"Phase 31 — Bettercap", i:["MITM Framework","Network Discovery"]},
+  { t:"Phase 32 — Ettercap", i:["MITM","ARP Spoofing"]},
+  { t:"Phase 33 — Masscan", i:["High-Speed Network Scanning"]},
+  { t:"Phase 34 — Nikto", i:["Web Server Scanning"]},
+  { t:"Phase 35 — Zeek", i:["Network Monitoring","Logs","Detection"]},
+  { t:"Phase 36 — Snort", i:["IDS","Rules","Detection"]},
+  { t:"Phase 37 — Suricata", i:["IDS/IPS","Threat Detection"]},
+  { t:"Phase 38 — Enterprise Networking", i:["Active Directory","DNS Infrastructure","DHCP Infrastructure","Proxy Servers","NAC","Enterprise VLAN Design"]},
+  { t:"Phase 39 — Cloud Networking", i:["AWS VPC","Azure VNet","Security Groups","NACL","Route Tables","VPN Gateway"]},
+  { t:"Phase 40 — SIEM Integration", i:["Syslog","Zeek Logs","Suricata Logs","Splunk","Microsoft Sentinel","QRadar"]},
+  { t:"Phase 41 — Labs", i:["Cisco Packet Tracer","GNS3","EVE-NG","VirtualBox","VMware","🔧 Enterprise Scenarios"]},
+  { t:"Phase 43 — Certifications", i:[
+    {t:"Beginner", sub:["Cisco CCST Networking","Cisco CCNA","CompTIA Network+"]},
+    {t:"Intermediate", sub:["CompTIA Security+","Cisco CyberOps Associate","Cisco DevNet Associate","Fortinet FCA","Fortinet FCP","Palo Alto PCCET","Palo Alto PCNSA"]},
+    {t:"Advanced", sub:["Cisco CCNP Enterprise","Cisco CCNP Security","GIAC GCIA","GIAC GSEC","EC-Council CND","OffSec OSCP","CISSP"]}
+  ]},
+  { t:"Phase 44 — Ports & Network Services", i:["What are Ports?","What is a Port?","Why Ports Exist","Port Numbers","Client Port vs Server Port","Ephemeral Ports","Well Known Ports","Registered Ports","Dynamic Ports","TCP Ports","UDP Ports","Socket Basics","Port States","Listening vs Established Ports"]}
+]},
+
+{ id:7, title:"Network Security & Penetration Testing — Index", sec:[
+  { t:"1. Network Architecture", i:["Network Models (LAN, WAN, MAN, Hybrid)","OSI Model","TCP/IP Model","Network Communication Flow"]},
+  { t:"2. Network Devices", i:["Router","Switch","Firewall","IDS / IPS","Access Points","Load Balancers"]},
+  { t:"3. Network Connections", i:["Wired Networks","Wireless Networks","VPN","VLAN","Subnetting Basics"]},
+  { t:"4. IP Addressing & Routing", i:["IPv4 Addressing","IPv6 Addressing","Subnetting","CIDR","Routing Basics","NAT (Network Address Translation)"]},
+  { t:"5. Network Protocols", i:["HTTP / HTTPS","DNS","DHCP","TCP / UDP","ICMP","FTP / SFTP","SSH","SMB","SMTP / IMAP / POP3"]},
+  { t:"6. Security Principles", i:["CIA Triad","Authentication & Authorization","Threats, Vulnerabilities, Exploits","Security Layers"]},
+  { t:"7. Network Attacks", i:["Reconnaissance Attacks","Scanning Attacks","Man-in-the-Middle (MITM)","Sniffing & Spoofing","Brute Force Attacks","Credential Attacks","Enumeration Attacks","Service Exploitation"]},
+  { t:"8. Vulnerabilities", i:["Open Ports","Default Credentials","Weak Passwords","Misconfigurations","Unpatched Services","Information Leakage"]},
+  { t:"9. Port-Based Security Checklist", i:[
+    {t:"Port 21 – FTP", sub:["Anonymous login (anonymous/anonymous)","Default credentials testing","Username enumeration","File upload/download testing","Misconfiguration checks"]}
+  ]},
+  { t:"10. Reconnaissance & Enumeration", i:["Network Scanning","Service Enumeration","Username Enumeration","Banner Grabbing","OS & Service Detection","SMB / FTP / SSH Enumeration"]},
+  { t:"11. Exploitation Tools", i:[
+    {t:"Metasploit Framework", sub:["msfconsole","search","use","set / unset","exploit / run","meterpreter","db_* commands","Multi-target handling"]},
+    {t:"Hydra", sub:["Brute force attacks","Username enumeration","Password attacks","Protocol-based attacks (FTP, SSH, HTTP)"]}
+  ]},
+  { t:"12. Password Attacks", i:["Brute Force Attacks","Dictionary Attacks","Credential Stuffing","Default Credential Testing","Password Spraying"]},
+  { t:"13. Pentesting Workflow", i:["Reconnaissance","Scanning","Enumeration","Exploitation","Privilege Escalation","Post Exploitation"]}
+]},
+
+{ id:8, title:"Security Principles Deep Dive", sec:[
+  { t:"CIA Triad", kind:'text', paras:[
+    "The <strong>CIA Triad</strong> is the fundamental security model in cybersecurity and serves as the foundation for protecting information systems. It consists of three core principles: <strong>Confidentiality</strong>, <strong>Integrity</strong>, and <strong>Availability</strong>. These principles help organizations design secure systems, implement security policies, and evaluate the effectiveness of security controls.",
+    "<strong>Confidentiality</strong> ensures that sensitive information is accessible only to authorized users and protected from unauthorized disclosure. Organizations achieve confidentiality through techniques such as encryption, authentication, authorization, access control lists (ACLs), data classification, and Multi-Factor Authentication (MFA).",
+    "<strong>Integrity</strong> ensures that data remains accurate, consistent, complete, and unaltered throughout its lifecycle. Any unauthorized modification, deletion, or corruption of data should be prevented or detected. Common mechanisms used to maintain integrity include hashing algorithms, digital signatures, checksums, version control, and file integrity monitoring.",
+    "<strong>Availability</strong> ensures that systems, services, applications, and data are accessible whenever authorized users need them. Organizations maintain availability through redundancy, backups, disaster recovery planning, load balancing, failover systems, regular maintenance, and protection against Denial-of-Service (DoS) attacks.",
+    "The CIA Triad is widely used when designing secure applications, performing risk assessments, and developing cybersecurity strategies."
+  ]},
+  { t:"Authentication & Authorization", kind:'text', paras:[
+    "<strong>Authentication</strong> is the process of verifying the identity of a user, device, application, or service before granting access to a system. It answers the question, <strong>\"Who are you?\"</strong> Authentication ensures that only legitimate users can access protected resources.",
+    "Common authentication methods include: Username and Password, PIN, Biometrics (Fingerprint, Face Recognition, Iris Scan), Smart Cards, Security Tokens, Multi-Factor Authentication (MFA).",
+    "<strong>Authorization</strong> is the process of determining what an authenticated user is permitted to access or perform within a system. It answers the question, <strong>\"What are you allowed to do?\"</strong> Authorization is enforced through permissions, user roles, security policies, and access control mechanisms such as Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC).",
+    "Authentication always occurs before authorization. Without successful authentication, authorization cannot be performed."
+  ]},
+  { t:"Threats, Vulnerabilities, Exploits", kind:'text', paras:[
+    "Understanding the relationship between <strong>Threats</strong>, <strong>Vulnerabilities</strong>, and <strong>Exploits</strong> is one of the most important concepts in cybersecurity because most cyber attacks involve all three components.",
+    "A <strong>Threat</strong> is any potential danger capable of causing damage to an organization's systems, networks, or information. Threats may come from cybercriminals, insider attacks, malware, ransomware, phishing campaigns, social engineering, natural disasters, or accidental human errors.",
+    "A <strong>Vulnerability</strong> is a weakness or flaw in software, hardware, operating systems, applications, network devices, or security processes that can be exploited by an attacker. Vulnerabilities often result from software bugs, outdated systems, weak passwords, insecure configurations, or missing security patches.",
+    "An <strong>Exploit</strong> is the technique, program, or piece of code used by an attacker to take advantage of a vulnerability. Successful exploitation can lead to unauthorized access, privilege escalation, malware installation, data theft, or complete system compromise.",
+    "Organizations reduce risk by identifying vulnerabilities through security assessments, applying software updates, implementing security controls, and continuously monitoring their infrastructure."
+  ]},
+  { t:"Security Layers (Defense in Depth)", kind:'text', paras:[
+    "<strong>Security Layers</strong>, commonly known as <strong>Defense in Depth</strong>, is a cybersecurity strategy that protects systems by implementing multiple independent layers of security controls. Instead of relying on a single security solution, organizations deploy several defensive mechanisms so that if one layer is compromised, additional layers continue protecting critical assets.",
+    "Defense in Depth combines <strong>physical</strong>, <strong>administrative</strong>, and <strong>technical</strong> security controls to create a comprehensive security architecture."
+  ], list:["Physical Security","Network Security","Endpoint Security","Application Security","Identity and Access Management (IAM)","Firewalls","Intrusion Detection and Prevention Systems (IDS/IPS)","Encryption","Antivirus and Anti-malware Protection","Security Monitoring and Logging","Backup and Disaster Recovery","Security Awareness Training","By implementing multiple security layers, organizations can reduce attack surfaces, detect threats earlier, minimize the impact of security incidents, and improve overall cyber resilience. Defense in Depth is considered one of the most effective approaches for protecting modern enterprise networks and information systems."]}
+]}
+];
+
+// ---------- render ----------
+const main = document.getElementById('main');
+const tocGrid = document.getElementById('tocGrid');
+let sectionCount = 0, topicCount = 0;
+const letters = "ABCDEFGH";
+
+PARTS.forEach((part, idx)=>{
+  sectionCount += part.sec.length;
+  part.sec.forEach(s=> topicCount += topicCountOf(s));
+
+  const partEl = document.createElement('div');
+  partEl.className = 'part';
+  partEl.id = 'part-'+part.id;
+
+  const noteHTML = part.note ? `<p class="part-sub">${part.note}</p>` : '';
+
+  partEl.innerHTML = `
+    <div class="part-head"><span class="letter">${letters[idx]}</span><h2>${part.title}</h2></div>
+    ${noteHTML}
+    <div class="sections"></div>
+  `;
+
+  const secHost = partEl.querySelector('.sections');
+  part.sec.forEach(s=>{
+    const d = document.createElement('details');
+    d.className = 'section';
+    const toolsBadge = s.tools ? ` <span class="code">tools: ${s.tools.join(', ')}</span>` : '';
+    d.innerHTML = `<summary>${s.t} <span class="code">/${topicCountOf(s)} items/</span>${toolsBadge}</summary>
+      <div class="section-body">${bodyHTML(s)}</div>`;
+    secHost.appendChild(d);
+  });
+
+  main.appendChild(partEl);
+
+  const a = document.createElement('a');
+  a.href = '#part-'+part.id;
+  a.innerHTML = `<b>${letters[idx]}</b> ${part.title}`;
+  tocGrid.appendChild(a);
+});
+
+document.getElementById('statSections').textContent = sectionCount;
+document.getElementById('statTopics').textContent = topicCount;
+
+document.getElementById('expandAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=true);
+document.getElementById('collapseAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=false);
+
+document.getElementById('search').addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.part').forEach(part=>{
+    let partMatch = false;
+    part.querySelectorAll('details.section').forEach(d=>{
+      const text = d.textContent.toLowerCase();
+      const match = q === '' || text.includes(q);
+      d.classList.toggle('hidden', !match);
+      if(match){ d.open = q !== ''; partMatch = true; }
+    });
+    part.classList.toggle('hidden', !partMatch);
+  });
+});
+</script>
+</body>
+</html>
