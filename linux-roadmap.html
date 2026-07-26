@@ -181,6 +181,23 @@ function deviceCard(d){
   </div>`;
 }
 
+
+// renders a section body from its "kind"
+function bodyHTML(sec){
+  if(sec.kind === 'table') return tableBlock(sec.table);
+  if(sec.kind === 'tables') return sec.tables.map(tableBlock).join('<div style="height:1rem"></div>');
+  if(sec.kind === 'devices') return sec.devices.map(deviceCard).join('');
+  if(sec.kind === 'text') return textBlock(sec.paras) + (sec.list ? listBlock(sec.list) : '');
+  return listBlock(sec.i || []);
+}
+function topicCountOf(sec){
+  if(sec.kind === 'table') return sec.table.rows.length;
+  if(sec.kind === 'tables') return sec.tables.reduce((a,t)=>a+t.rows.length,0);
+  if(sec.kind === 'devices') return sec.devices.length;
+  if(sec.kind === 'text') return (sec.list ? sec.list.length : sec.paras.length);
+  return (sec.i || []).length;
+}
+
 // ---------- DATA ----------
 const PARTS = [
 
