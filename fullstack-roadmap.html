@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Stack Roadmap // dr4g0n-r04dm4p</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Cinzel:wght@700;900&display=swap');
+  :root{
+    --bg:#0a0705; --bg-alt:#130d0a; --bg-card:#160f0b; --line:#2a1c14;
+    --ember:#ff6a2b; --crimson:#c81d25; --gold:#d4a017;
+    --text:#ecdfd1; --text-dim:#9c8a78; --text-dimmer:#6e5f52;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:
+      radial-gradient(ellipse 70% 30% at 50% 0%, rgba(212,160,23,.08), transparent 70%), var(--bg);
+    color:var(--text); font-family:'JetBrains Mono', monospace; line-height:1.5;
+    padding-bottom:6rem;
+  }
+  a{color:var(--gold);}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,7,5,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:.9rem 1.5rem;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none;}
+  .brand .dot{color:var(--gold);}
+  .brand span{font-family:'Cinzel', serif; font-weight:900; letter-spacing:.03em; font-size:1.05rem; color:var(--text);}
+  header .meta{font-size:.72rem; color:var(--text-dim); letter-spacing:.08em;}
+  header .meta a{color:var(--ember); text-decoration:none;}
+  .back{
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+    color:var(--text-dim); border:1px solid var(--line); padding:.4rem .8rem; border-radius:4px; transition:.2s;
+  }
+  .back:hover{color:var(--gold); border-color:var(--gold);}
+
+  .hero{padding:4.5rem 1.5rem 2.5rem; text-align:center; max-width:820px; margin:0 auto;}
+  .hero .eyebrow{font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .hero h1{
+    font-family:'Cinzel', serif; font-weight:900; font-size:clamp(1.8rem,5vw,3rem);
+    background:linear-gradient(120deg, var(--gold), var(--ember) 55%, var(--crimson));
+    -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.2; margin-bottom:1rem;
+  }
+  .hero p{color:var(--text-dim); font-size:.9rem; max-width:640px; margin:0 auto;}
+  .hero .stats{display:flex; justify-content:center; gap:2.2rem; margin-top:2rem; flex-wrap:wrap;}
+  .hero .stats div{text-align:center;}
+  .hero .stats b{display:block; font-size:1.4rem; color:var(--gold); font-family:'Cinzel',serif;}
+  .hero .stats span{font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dimmer);}
+
+  .controls{max-width:900px; margin:0 auto 2rem; padding:0 1.5rem; display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center;}
+  .controls button{
+    font-family:inherit; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--bg-alt); color:var(--text-dim); border:1px solid var(--line);
+    padding:.5rem 1rem; border-radius:4px; cursor:pointer; transition:.2s;
+  }
+  .controls button:hover{color:var(--gold); border-color:var(--gold);}
+  #search{
+    font-family:inherit; background:var(--bg-alt); border:1px solid var(--line); color:var(--text);
+    padding:.5rem 1rem; border-radius:4px; font-size:.78rem; min-width:220px; flex:1; max-width:320px;
+  }
+  #search::placeholder{color:var(--text-dimmer);}
+
+  .toc{max-width:900px; margin:0 auto 3rem; padding:1.4rem 1.6rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:8px;}
+  .toc h3{font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .toc-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:.4rem .8rem;}
+  .toc-grid a{font-size:.78rem; color:var(--text-dim); text-decoration:none; display:flex; gap:.5rem; padding:.25rem 0; transition:.15s;}
+  .toc-grid a:hover{color:var(--gold);}
+  .toc-grid a b{color:var(--ember); font-weight:700;}
+
+  main{max-width:900px; margin:0 auto; padding:0 1.5rem;}
+  .part{margin-bottom:2.6rem; scroll-margin-top:5rem;}
+  .part-head{
+    display:flex; align-items:baseline; gap:1rem; padding:1rem 1.2rem;
+    background:linear-gradient(90deg, var(--bg-card), transparent);
+    border-left:3px solid var(--gold); border-radius:4px; margin-bottom:.8rem;
+  }
+  .part-head .letter{font-family:'Cinzel',serif; font-size:1.6rem; color:var(--gold); font-weight:900; opacity:.8;}
+  .part-head h2{font-size:1.1rem; color:var(--text); letter-spacing:.02em;}
+  .part-sub{color:var(--text-dimmer); font-size:.78rem; margin:0 0 .8rem 3.4rem; font-style:italic;}
+
+  details.section{border:1px solid var(--line); border-radius:6px; margin-bottom:.55rem; background:var(--bg-alt); overflow:hidden;}
+  details.section[open]{border-color:#3a2418;}
+  details.section summary{
+    cursor:pointer; list-style:none; padding:.75rem 1.1rem; display:flex; align-items:center; gap:.7rem;
+    font-size:.85rem; color:var(--text); font-weight:500; -webkit-tap-highlight-color:transparent;
+  }
+  details.section summary::-webkit-details-marker{display:none;}
+  details.section summary::before{content:'▸'; color:var(--ember); font-size:.75rem; transition:transform .2s; flex-shrink:0;}
+  details.section[open] summary::before{transform:rotate(90deg);}
+  details.section summary .code{color:var(--gold); font-size:.72rem; opacity:.75;}
+  .section-body{padding:.2rem 1.3rem 1rem 2.5rem;}
+  .section-body ul{list-style:none;}
+  .section-body > ul > li{position:relative; padding:.28rem 0 .28rem 1rem; font-size:.82rem; color:var(--text-dim); border-left:1px solid var(--line); margin-left:.1rem;}
+  .section-body > ul > li::before{content:''; position:absolute; left:-4px; top:1rem; width:7px; height:1px; background:var(--line);}
+  .section-body ul li ul{margin:.35rem 0 .35rem .4rem; padding-left:1rem; border-left:1px dashed var(--line);}
+  .section-body ul li ul li{font-size:.78rem; color:var(--text-dimmer); padding:.18rem 0;}
+  .section-body p{font-size:.83rem; color:var(--text-dim); margin-bottom:.7rem;}
+  .section-body p strong{color:var(--text);}
+  .section-body .label{font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--ember); margin:.9rem 0 .35rem;}
+
+  table{width:100%; border-collapse:collapse; font-size:.78rem; margin-bottom:.4rem;}
+  table caption{text-align:left; color:var(--gold); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem;}
+  th,td{padding:.5rem .6rem; border:1px solid var(--line); text-align:left; vertical-align:top;}
+  th{background:var(--bg-card); color:var(--gold); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;}
+  td{color:var(--text-dim);}
+  td b{color:var(--text);}
+
+  .device-card{border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.3rem; margin-bottom:.9rem; background:var(--bg-card);}
+  .device-card h4{color:var(--ember); font-size:.95rem; margin-bottom:.5rem; font-family:'Cinzel',serif;}
+  .device-card p{font-size:.82rem; color:var(--text-dim); margin-bottom:.6rem;}
+  .device-card .label{font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin:.7rem 0 .3rem;}
+  .device-card ul{list-style:none; padding-left:0;}
+  .device-card ul li{font-size:.78rem; color:var(--text-dim); padding:.15rem 0 .15rem 1rem; position:relative;}
+  .device-card ul li::before{content:'—'; position:absolute; left:0; color:var(--text-dimmer);}
+
+  footer{text-align:center; color:var(--text-dimmer); font-size:.68rem; letter-spacing:.1em; margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line);}
+  footer .fire{color:var(--gold);}
+  .hidden{display:none !important;}
+  @media (max-width:600px){ .hero{padding:3rem 1rem 2rem;} .toc-grid{grid-template-columns:1fr;} .section-body{padding-left:1.4rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html"><span class="dot"></span><span>VT Dr4g0n</span></a>
+  <div class="meta">@<a href="https://instagram.com/vt_dr4g0n" target="_blank" rel="noopener">vt_dr4g0n</a> — dr4g0n-r04dm4p</div>
+  <a class="back" href="index.html">← Back to hub</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Track 04</div>
+  <h1>Full Stack Development Roadmap</h1>
+  <div class="stats">
+    <div><b id="statParts">8</b><span>Parts</span></div>
+    <div><b id="statSections">0</b><span>Sections</span></div>
+    <div><b id="statTopics">0</b><span>Topics</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="Search a language, framework, phase, concept…">
+  <button id="expandAll">Expand all</button>
+  <button id="collapseAll">Collapse all</button>
+</div>
+
+<div class="toc" id="toc">
+  <h3>Jump to part</h3>
+  <div class="toc-grid" id="tocGrid"></div>
+</div>
+
+<main id="main"></main>
+
+<footer>8 parts · HTML to production deployment · <span class="fire">dr4g0n-r04dm4p</span> · fullstack-roadmap.html</footer>
+
+<script>
+// ---------- helpers ----------
+function itemHTML(item){
+  if(typeof item === 'string') return `<li>${item}</li>`;
+  const subs = item.sub.map(s=>`<li>${s}</li>`).join('');
+  return `<li>${item.t}<ul>${subs}</ul></li>`;
+}
+function listBlock(items){ return `<ul>${items.map(itemHTML).join('')}</ul>`; }
+function textBlock(paras){ return paras.map(p=>`<p>${p}</p>`).join(''); }
+function tableBlock(tbl){
+  const head = `<tr>${tbl.headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const rows = tbl.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+  return `<table>${tbl.caption?`<caption>${tbl.caption}</caption>`:''}${head}${rows}</table>`;
+}
+function deviceCard(d){
+  return `<div class="device-card">
+    <h4>${d.name}</h4>
+    ${textBlock(d.def)}
+    <div class="label">Functions</div><ul>${d.functions.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Advantages</div><ul>${d.advantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Disadvantages</div><ul>${d.disadvantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Real-World Example</div><p>${d.example}</p>
+  </div>`;
+}
+
+// ---------- DATA ----------
+const PARTS = [
+
+{ id:1, title:"Core Full Stack Concepts", sec:[
+  { t:"What is Full Stack Development?", kind:'text', paras:[
+    "<strong>Full Stack Development</strong> refers to the practice of building both the <strong>frontend</strong> (client-side, what the user sees and interacts with) and the <strong>backend</strong> (server-side, business logic, databases, and APIs) of a web application. A full stack developer understands the entire request lifecycle — from a user's click, through the network, to the database, and back.",
+    "Modern full stack development also increasingly overlaps with <strong>DevOps</strong> — deploying, monitoring, and securing applications in production — making it one of the broadest and most in-demand skill sets in software engineering."
+  ]},
+  { t:"Client-Server Architecture", kind:'text', paras:[
+    "The <strong>client-server model</strong> is the foundation of the web. A <strong>client</strong> (typically a browser) sends a request to a <strong>server</strong>, which processes that request — often querying a database — and returns a response, usually as HTML, JSON, or another data format.",
+    "This separation of concerns allows frontend and backend systems to evolve independently, be developed by separate teams, and scale separately based on load."
+  ]},
+  { t:"HTTP & the Request/Response Cycle", kind:'text', paras:[
+    "<strong>HTTP (HyperText Transfer Protocol)</strong> is the application-layer protocol that governs how clients and servers communicate on the web. Every interaction — loading a page, submitting a form, calling an API — follows the same request/response cycle."
+  ], list:["Client sends an HTTP request (method, URL, headers, body)","Server routes the request to the appropriate handler","Server processes logic, queries the database if needed","Server sends back an HTTP response (status code, headers, body)","Client renders or processes the response"]},
+  { t:"Frontend vs Backend vs Database", kind:'text', paras:[
+    "A working mental model of full stack development divides the system into three core layers, often called the <strong>3-tier architecture</strong>.",
+  ], list:[
+    "Frontend (Presentation Layer) — HTML, CSS, JavaScript, frameworks (React/Vue/Angular)",
+    "Backend (Application/Logic Layer) — Node.js, Python, Java, PHP, Go, business logic, APIs",
+    "Database (Data Layer) — SQL (PostgreSQL, MySQL) or NoSQL (MongoDB, Redis) data storage"
+  ]},
+  { t:"APIs & Data Formats", kind:'text', paras:[
+    "An <strong>API (Application Programming Interface)</strong> defines how the frontend and backend — or two different services — communicate. Modern web apps overwhelmingly exchange data as <strong>JSON (JavaScript Object Notation)</strong>, a lightweight, human-readable text format.",
+    "Common API styles include <strong>REST</strong> (resource-based, uses standard HTTP verbs), <strong>GraphQL</strong> (flexible query language for APIs), and <strong>gRPC</strong> (high-performance binary protocol used for internal microservice communication)."
+  ]}
+]},
+
+{ id:2, title:"Web Application Architecture", sec:[
+  { t:"1.1 Application Architecture Patterns", i:[
+    {t:"Monolithic Architecture — the entire application (frontend, backend, database access) lives in a single deployable codebase.", sub:["Simple to develop and deploy initially","Harder to scale specific components independently","Common in early-stage startups"]},
+    {t:"Microservices Architecture — the application is split into small, independently deployable services that communicate over APIs.", sub:["Each service owns its own data and logic","Enables independent scaling and deployment","Adds operational complexity (service discovery, networking)"]},
+    {t:"Serverless Architecture — backend logic runs in stateless, event-triggered functions managed by a cloud provider.", sub:["No server management required","Pay-per-execution pricing model","Examples: AWS Lambda, Vercel Functions, Cloudflare Workers"]},
+    {t:"JAMstack — decoupled frontend (JavaScript, APIs, Markup) served as static assets from a CDN, backed by APIs.", sub:["Extremely fast page loads","Great for content sites and static-heavy apps","Examples: Next.js static export, Gatsby, Astro"]}
+  ]},
+  { t:"1.2 Request Lifecycle (Full Stack Flow)", kind:'text', paras:["How data moves through a modern full stack application, end to end:"], list:[
+    "1. User interacts with the UI (click, form submit)","2. Frontend framework sends an HTTP/API request",
+    "3. Request hits a load balancer / reverse proxy","4. Backend server routes the request to a controller/handler",
+    "5. Backend applies business logic, validates input, checks auth","6. Backend queries the database (ORM/query builder)",
+    "7. Database returns data to the backend","8. Backend formats a response (usually JSON)",
+    "9. Response travels back through the network to the client","10. Frontend updates the UI (re-render, state update)"
+  ]},
+  { t:"1.3 Rendering Strategies", kind:'text', paras:["Where and when HTML is generated significantly affects performance, SEO, and user experience."], list:[
+    "1. Client-Side Rendering (CSR) → Browser downloads JS, renders page dynamically (e.g. classic React SPA)",
+    "2. Server-Side Rendering (SSR) → Server renders full HTML per request (e.g. Next.js, Nuxt)",
+    "3. Static Site Generation (SSG) → HTML pre-built at build time, served from CDN",
+    "4. Incremental Static Regeneration (ISR) → Static pages regenerated on-demand after deployment",
+    "5. Hydration → Client-side JS 'attaches' interactivity to server-rendered HTML"
+  ]}
+]},
+
+{ id:3, title:"Full Stack Certifications", sec:[
+  { t:"Entry Level", kind:'table', table:{caption:"Entry Level", headers:["Cert","Importance","Notes"], rows:[
+    ["freeCodeCamp Responsive Web Design","3","Free, project-based HTML/CSS fundamentals"],
+    ["freeCodeCamp JavaScript Algorithms & Data Structures","4","Strong foundational JS certification, free"],
+    ["Meta Front-End Developer (Coursera)","3","Covers React and frontend fundamentals"],
+    ["HubSpot Web Design for Marketers","2","Basic, marketing-oriented web certification"]
+  ]}},
+  { t:"Intermediate Level", kind:'table', table:{caption:"Intermediate Level", headers:["Cert","Importance","Notes"], rows:[
+    ["Meta Back-End Developer (Coursera)","4","Node.js, APIs, and databases fundamentals"],
+    ["MongoDB Certified Developer Associate","4","NoSQL database design and querying"],
+    ["AWS Certified Developer – Associate","5","Cloud deployment for full stack applications"],
+    ["Microsoft Certified: Azure Developer Associate","4","Full stack development on Azure"],
+    ["freeCodeCamp Back End Development & APIs","4","Free, hands-on Node/Express certification"]
+  ]}},
+  { t:"Advanced Level", kind:'table', table:{caption:"Advanced Level", headers:["Cert","Importance","Notes"], rows:[
+    ["AWS Certified Solutions Architect – Professional","5","Advanced cloud architecture for scalable full stack systems"],
+    ["Certified Kubernetes Application Developer (CKAD)","4","Deploying and managing containerized full stack apps"],
+    ["Google Professional Cloud Developer","4","Advanced GCP application development"],
+    ["GraphQL Certified Developer (Apollo)","3","Advanced API design with GraphQL"],
+    ["OffSec WSTG-based Web App Security Assessment (relevant for secure dev)","4","Bridges full stack development with application security"]
+  ]}}
+]},
+
+{ id:4, title:"Full Stack Connections & Integrations", sec:[
+  { t:"4.1 Frontend ↔ Backend Communication", kind:'text', paras:["The frontend and backend are decoupled systems that communicate almost exclusively over HTTP APIs."], list:["REST APIs over HTTP/JSON","GraphQL single-endpoint queries","WebSockets for real-time bidirectional communication","Server-Sent Events (SSE) for one-way live updates","CORS (Cross-Origin Resource Sharing) policy control"]},
+  { t:"4.2 Backend ↔ Database Connections", kind:'text', paras:["Backends rarely write raw queries by hand in production — they typically use an abstraction layer."], list:["ORMs (Object-Relational Mappers) — Prisma, Sequelize, TypeORM, SQLAlchemy","ODMs (Object-Document Mappers) — Mongoose for MongoDB","Connection pooling for performance","Migrations for schema version control","Query builders — Knex.js"]},
+  { t:"4.3 Authentication & Session Management", kind:'text', paras:["Connecting a user's identity across stateless HTTP requests requires a dedicated mechanism."], list:["Session-based auth with cookies","Token-based auth (JWT)","OAuth 2.0 / OpenID Connect (Google, GitHub login)","Passwordless auth (magic links, WebAuthn)","Refresh token rotation"]},
+  { t:"4.4 Third-Party Service Integrations", kind:'text', paras:["Full stack apps rarely build everything in-house — they integrate managed services for common needs."], list:["Payment processing — Stripe, PayPal","Email delivery — SendGrid, Resend, Mailgun","File storage — AWS S3, Cloudflare R2","Authentication providers — Auth0, Firebase Auth, Clerk","Search — Elasticsearch, Algolia"]},
+  { t:"4.5 Deployment & Hosting Connections", kind:'text', paras:["How a full stack app gets from a developer's machine to production users."], list:["Static/frontend hosting — Vercel, Netlify, Cloudflare Pages","Backend/server hosting — Render, Railway, AWS EC2/ECS, DigitalOcean","Containerized deployment — Docker + Kubernetes","CI/CD pipelines — GitHub Actions, GitLab CI","Reverse proxies & load balancers — Nginx, Cloudflare"]}
+]},
+{ id:5, title:"Frameworks & Tools — Deep Dive", sec:[
+  { t:"React, Node.js/Express, Databases (SQL & NoSQL), Docker, Git, REST/GraphQL", kind:'devices', devices:[
+    { name:"React (Frontend Library)", def:["<strong>React</strong> is a JavaScript library for building user interfaces through reusable, composable <strong>components</strong>. It uses a <strong>virtual DOM</strong> to efficiently update only the parts of the page that actually change, and popularized the modern component-based frontend paradigm."],
+      functions:["Renders UI from component trees.","Manages local component state (useState).","Handles side effects (useEffect).","Supports server-side rendering via frameworks like Next.js.","Enables reusable, testable UI components."],
+      advantages:["Huge ecosystem and community.","Reusable component architecture.","Strong tooling and dev-experience (React DevTools).","Works for web, and via React Native, mobile."],
+      disadvantages:["JSX and hooks have a learning curve.","Requires additional libraries for routing/state at scale.","Frequent ecosystem churn (new patterns emerge often)."],
+      example:"An e-commerce site builds its product listing page as a <ProductCard> component reused across category, search, and cart pages." },
+    { name:"Node.js & Express (Backend Runtime/Framework)", def:["<strong>Node.js</strong> is a JavaScript runtime built on Chrome's V8 engine that allows JavaScript to run outside the browser, commonly for backend servers. <strong>Express</strong> is the most widely used minimalist web framework built on top of Node.js for building APIs and web servers."],
+      functions:["Handles HTTP routing (GET, POST, PUT, DELETE).","Middleware pipeline for auth, logging, validation.","Connects to databases via drivers/ORMs.","Serves REST or GraphQL APIs.","Non-blocking, event-driven I/O for high concurrency."],
+      advantages:["Same language (JavaScript) across frontend and backend.","Massive package ecosystem (npm).","Excellent for I/O-heavy, real-time applications.","Lightweight and fast to prototype with."],
+      disadvantages:["Single-threaded — CPU-heavy tasks need workarounds (worker threads).","Callback/async complexity if not managed well.","Express itself is unopinionated, requiring architectural decisions."],
+      example:"A backend exposes POST /api/orders using Express, which validates the request, saves it via an ORM, and returns a JSON confirmation." },
+    { name:"Relational Databases (SQL)", def:["<strong>Relational databases</strong> like PostgreSQL and MySQL store structured data in tables with defined schemas, related via foreign keys, and queried using <strong>SQL (Structured Query Language)</strong>. They enforce strong data consistency guarantees (ACID)."],
+      functions:["Stores structured, relational data.","Enforces schema and data integrity constraints.","Supports complex JOINs across tables.","Provides transactions (ACID compliance).","Indexing for fast querying."],
+      advantages:["Strong consistency and data integrity.","Mature tooling and widespread expertise.","Excellent for complex relational data (e.g. financial systems).","SQL is a portable, well-understood standard."],
+      disadvantages:["Schema changes require migrations.","Vertical scaling limits compared to some NoSQL options.","Can be overkill for simple, unstructured data."],
+      example:"A banking application uses PostgreSQL to guarantee that a money transfer either fully completes or fully rolls back (a single ACID transaction)." },
+    { name:"NoSQL Databases (MongoDB, Redis)", def:["<strong>NoSQL databases</strong> store data in flexible, non-tabular formats. <strong>MongoDB</strong> stores JSON-like documents with dynamic schemas, while <strong>Redis</strong> is an in-memory key-value store used for caching, sessions, and real-time data."],
+      functions:["MongoDB: flexible document storage, horizontal sharding.","Redis: sub-millisecond caching, pub/sub messaging, session storage.","Both support high write/read throughput at scale.","Schema-less or loosely-typed data models."],
+      advantages:["Flexible schema — fast iteration during development.","Excellent horizontal scalability.","Redis dramatically improves performance via caching.","Good fit for unstructured or rapidly-evolving data."],
+      disadvantages:["Weaker consistency guarantees by default (eventual consistency).","Data duplication is common, increasing complexity.","Less mature tooling for complex relational queries."],
+      example:"A social media app uses MongoDB to store flexible user posts and Redis to cache the current session and hot news feed data." },
+    { name:"Docker (Containerization)", def:["<strong>Docker</strong> packages an application and all its dependencies into a portable, isolated <strong>container</strong> that runs identically across development, testing, and production environments."],
+      functions:["Packages apps with dependencies into images.","Runs isolated containers from those images.","Docker Compose orchestrates multi-container apps (app + db + cache).","Enables consistent environments across the team and CI/CD."],
+      advantages:["Eliminates 'works on my machine' problems.","Fast, lightweight compared to full VMs.","Simplifies onboarding and deployment.","Pairs naturally with Kubernetes for scaling."],
+      disadvantages:["Adds a learning curve (Dockerfiles, networking, volumes).","Image bloat if not optimized.","Container security requires deliberate hardening."],
+      example:"A team defines a docker-compose.yml that spins up their Node.js API, PostgreSQL database, and Redis cache with a single command." },
+    { name:"Git & GitHub (Version Control)", def:["<strong>Git</strong> is a distributed version control system that tracks changes to code over time, enabling collaboration, branching, and rollback. <strong>GitHub</strong> (or GitLab/Bitbucket) hosts Git repositories and adds collaboration tooling like pull requests and CI/CD."],
+      functions:["Tracks file history and changes (commits).","Enables branching and merging for parallel work.","Powers pull request-based code review.","Integrates with CI/CD pipelines (GitHub Actions)."],
+      advantages:["Industry-standard, essential for any team development.","Enables safe experimentation via branches.","Full history and rollback capability.","Huge ecosystem of integrations."],
+      disadvantages:["Merge conflicts can be tricky for beginners.","Requires discipline (commit hygiene, branching strategy).","Large binary files are poorly handled natively."],
+      example:"A developer opens a feature branch, commits incremental changes, and opens a pull request that triggers automated tests via GitHub Actions before merging." },
+    { name:"REST & GraphQL APIs", def:["<strong>REST</strong> is an architectural style where resources are exposed via URLs and manipulated with standard HTTP verbs. <strong>GraphQL</strong> is a query language that lets clients request exactly the data fields they need from a single endpoint."],
+      functions:["REST: GET/POST/PUT/PATCH/DELETE on resource URLs.","GraphQL: single /graphql endpoint, client-defined queries.","Both support authentication, pagination, and versioning strategies.","GraphQL supports real-time subscriptions."],
+      advantages:["REST: simple, cacheable, widely understood.","GraphQL: avoids over/under-fetching data, strongly typed schema.","Both are language-agnostic and scale well.","Great tooling ecosystem (Postman, Apollo, Swagger)."],
+      disadvantages:["REST: can require multiple round-trips for nested data.","GraphQL: added complexity, caching is harder, potential for expensive queries.","Both require careful auth and rate-limiting design."],
+      example:"A mobile app uses GraphQL to fetch a user's profile, recent posts, and friend count in a single request instead of three separate REST calls." },
+    { name:"CI/CD & Cloud Deployment", def:["<strong>CI/CD (Continuous Integration/Continuous Deployment)</strong> automates testing and deployment of code changes, while cloud platforms like <strong>Vercel, AWS, and Render</strong> host the running application."],
+      functions:["Automatically runs tests on every push/PR.","Builds and deploys the app on merge to main.","Manages environment variables and secrets.","Supports rollback to previous deployments."],
+      advantages:["Faster, safer, more frequent releases.","Reduces manual deployment errors.","Enables preview deployments for every PR.","Scales automatically with cloud infrastructure."],
+      disadvantages:["Initial pipeline setup takes time.","Misconfigured pipelines can leak secrets.","Cloud costs require ongoing monitoring."],
+      example:"Every pull request automatically gets a live preview URL on Vercel, and merging to main triggers a production deployment via GitHub Actions." }
+  ]}
+]},
+{ id:6, title:"SkillMate — Full Stack Mastery Pathway (Phase 0–44)", note:"Learn the Fundamentals → Master Frontend → Master Backend → Connect the Stack → Deploy & Scale → Prepare for Certifications → Become Job Ready", sec:[
+  { t:"Phase 0 — Welcome", i:["Introduction to Full Stack Development","How to use this pathway","Career Roadmap","Required Software (Node.js, VS Code, Git)","Dev Environment Setup","Learning Methodology"]},
+  { t:"Phase 1 — Internet & Web Fundamentals", i:["How the Internet Works","DNS Resolution","HTTP/HTTPS","Client-Server Model","Browsers & Rendering Engines","URLs & URIs"]},
+  { t:"Phase 2 — HTML", i:["Document Structure","Semantic HTML","Forms & Inputs","Tables","Accessibility (ARIA)","Meta Tags & SEO Basics","🔧 Lab: Build a Semantic Page"]},
+  { t:"Phase 3 — CSS", i:["Selectors & Specificity","Box Model","Flexbox","CSS Grid","Responsive Design & Media Queries","Animations & Transitions","CSS Variables","🔧 Lab: Responsive Landing Page"]},
+  { t:"Phase 4 — JavaScript Fundamentals", i:["Variables & Data Types","Functions & Scope","Arrays & Objects","Loops & Conditionals","DOM Manipulation","Events","ES6+ Syntax (arrow functions, destructuring, spread)","🔧 Lab: Interactive To-Do App"]},
+  { t:"Phase 5 — Asynchronous JavaScript", i:["Callbacks","Promises","Async/Await","Fetch API","Error Handling","Event Loop & Microtasks","🔧 Lab: Weather App with API"]},
+  { t:"Phase 6 — Version Control with Git", i:["Git Basics (init/add/commit)","Branching & Merging","Pull Requests","Resolving Merge Conflicts","GitHub Workflow","🔧 Lab: Collaborative Repo Exercise"]},
+  { t:"Phase 7 — Frontend Framework (React)", i:["Components & JSX","Props & State","Hooks (useState, useEffect, useContext)","Conditional Rendering","Lists & Keys","Forms in React","Component Lifecycle","🔧 Lab: Multi-Page React App"]},
+  { t:"Phase 8 — Frontend Routing & State Management", i:["React Router","Client-Side Navigation","Global State (Context API)","State Libraries (Redux/Zustand)","Data Fetching Patterns (React Query)","🔧 Lab: Dashboard with Routing"]},
+  { t:"Phase 9 — Styling at Scale", i:["CSS Frameworks (Tailwind CSS)","Component Libraries (shadcn/ui, MUI)","CSS-in-JS","Design Systems","🔧 Lab: Design System Component Library"]},
+  { t:"Phase 10 — Backend Fundamentals with Node.js", i:["Node.js Runtime","npm & package.json","Modules (CommonJS/ESM)","File System Module","Event Emitters","🔧 Lab: CLI Tool in Node.js"]},
+  { t:"Phase 11 — Express.js & REST APIs", note:"Build structured, RESTful backend services.", tools:["Express.js","Postman"], i:["Routing","Middleware","Request/Response Objects","Error Handling Middleware","RESTful Resource Design","API Versioning","🔧 Lab: Full CRUD REST API"]},
+  { t:"Phase 12 — Databases: SQL", note:"Relational data modeling and querying.", tools:["PostgreSQL","MySQL"], i:["Relational Data Modeling","SQL Queries (SELECT/INSERT/UPDATE/DELETE)","JOINs","Indexes","Transactions & ACID","Normalization","🔧 Lab: Design a Relational Schema"]},
+  { t:"Phase 13 — Databases: NoSQL", note:"Document and key-value data modeling.", tools:["MongoDB","Redis"], i:["Document Modeling","CRUD in MongoDB","Aggregation Pipeline","Redis Caching Patterns","Choosing SQL vs NoSQL","🔧 Lab: Build a Caching Layer"]},
+  { t:"Phase 14 — ORMs & Query Builders", note:"Abstract database access safely and efficiently.", tools:["Prisma","Mongoose"], i:["Schema Definition","Migrations","Relations & Associations","Query Building","Preventing SQL Injection","🔧 Lab: Migrate Raw SQL to an ORM"]},
+  { t:"Phase 15 — Authentication & Authorization", note:"Secure user identity across a stateless web.", tools:["JWT","OAuth2","bcrypt"], i:["Password Hashing","Session-Based Auth","JWT-Based Auth","OAuth2 / Social Login","Role-Based Access Control (RBAC)","Refresh Tokens","🔧 Lab: Full Auth Flow"]},
+  { t:"Phase 16 — API Design & Documentation", i:["RESTful Best Practices","Status Codes & Error Formats","Pagination & Filtering","Rate Limiting","API Documentation (Swagger/OpenAPI)","🔧 Lab: Document a Public API"]},
+  { t:"Phase 17 — GraphQL", note:"Flexible, client-driven API queries.", tools:["Apollo Server","GraphQL"], i:["Schemas & Types","Queries & Mutations","Resolvers","Subscriptions","GraphQL vs REST","🔧 Lab: Convert a REST API to GraphQL"]},
+  { t:"Phase 18 — Testing", note:"Verify correctness across the stack.", tools:["Jest","React Testing Library","Cypress"], i:["Unit Testing","Integration Testing","End-to-End Testing","Mocking & Stubbing","Test-Driven Development (TDD)","🔧 Lab: Test Suite for a CRUD App"]},
+  { t:"Phase 19 — Containerization with Docker", note:"Package and run the full stack consistently.", tools:["Docker","Docker Compose"], i:["Dockerfiles","Images & Containers","Docker Compose (multi-service)","Volumes & Networking","🔧 Lab: Containerize a Full Stack App"]},
+  { t:"Phase 20 — CI/CD Pipelines", note:"Automate testing and deployment.", tools:["GitHub Actions"], i:["Pipeline Basics","Automated Testing on Push","Build & Deploy Steps","Environment Secrets","🔧 Lab: Full CI/CD Pipeline"]},
+  { t:"Phase 21 — Cloud Deployment", note:"Ship the application to production.", tools:["Vercel","AWS","Render"], i:["Static Hosting","Server Hosting","Environment Variables","Custom Domains & DNS","SSL/TLS Certificates","🔧 Lab: Deploy a Full Stack App"]},
+  { t:"Phase 22 — Server-Side Rendering & Meta-Frameworks", note:"Combine frontend and backend into a unified framework.", tools:["Next.js"], i:["File-Based Routing","SSR / SSG / ISR","API Routes","Middleware","Image & Font Optimization","🔧 Lab: Rebuild a Project in Next.js"]},
+  { t:"Phase 23 — Real-Time Applications", note:"Bidirectional, live communication.", tools:["WebSockets","Socket.io"], i:["WebSocket Protocol","Socket.io Rooms & Namespaces","Server-Sent Events","🔧 Lab: Real-Time Chat App"]},
+  { t:"Phase 24 — TypeScript", i:["Static Typing","Interfaces & Types","Generics","Type Safety Across the Stack"]},
+  { t:"Phase 25 — Tailwind CSS", i:["Utility-First Styling","Responsive Utilities","Custom Themes"]},
+  { t:"Phase 26 — Postman/Insomnia", i:["API Testing","Collections","Environment Variables"]},
+  { t:"Phase 27 — Prisma", i:["Schema Modeling","Migrations","Type-Safe Queries"]},
+  { t:"Phase 28 — Redis", i:["Caching Strategies","Pub/Sub Messaging"]},
+  { t:"Phase 29 — Nginx", i:["Reverse Proxying","Load Balancing"]},
+  { t:"Phase 30 — Docker Compose", i:["Multi-Container Orchestration"]},
+  { t:"Phase 31 — GitHub Actions", i:["Workflow YAML","Automated Deployments"]},
+  { t:"Phase 32 — Jest", i:["Unit Testing Patterns","Mocking"]},
+  { t:"Phase 33 — Cypress", i:["End-to-End Test Automation"]},
+  { t:"Phase 34 — Webpack/Vite", i:["Bundling","Build Optimization"]},
+  { t:"Phase 35 — Web Application Security for Developers", i:["Input Validation","SQL Injection Prevention","XSS Prevention","CSRF Protection","Secure Headers","Secrets Management"]},
+  { t:"Phase 36 — Kubernetes Basics", i:["Pods & Deployments","Services","Scaling Containerized Apps"]},
+  { t:"Phase 37 — Performance Optimization", i:["Lazy Loading","Code Splitting","Caching Strategies","Database Query Optimization"]},
+  { t:"Phase 38 — Enterprise Application Patterns", i:["Microservices Communication","Message Queues (RabbitMQ/Kafka)","API Gateways","Service Mesh Basics"]},
+  { t:"Phase 39 — Cloud & Serverless", i:["AWS Lambda","Vercel/Cloudflare Functions","Serverless Databases","Edge Computing"]},
+  { t:"Phase 40 — Monitoring & Observability", i:["Application Logging","Error Tracking (Sentry)","Performance Monitoring (APM)","Uptime Monitoring"]},
+  { t:"Phase 41 — Labs", i:["Build a Full Stack Portfolio Project","Clone a Popular App (Twitter/Airbnb)","Open Source Contribution","🔧 Capstone Project"]},
+  { t:"Phase 43 — Certifications", i:[
+    {t:"Beginner", sub:["freeCodeCamp Responsive Web Design","freeCodeCamp JS Algorithms"]},
+    {t:"Intermediate", sub:["Meta Front-End Developer","Meta Back-End Developer","AWS Certified Developer – Associate"]},
+    {t:"Advanced", sub:["AWS Solutions Architect – Professional","CKAD","Google Professional Cloud Developer"]}
+  ]},
+  { t:"Phase 44 — Full Stack in the Real World", i:["Startup MVP Development","Enterprise SaaS Platforms","E-commerce Systems","Freelance & Agency Work","Open Source Maintenance","Technical Interviews & System Design"]}
+]},
+{ id:7, title:"Full Stack Development — Index", sec:[
+  { t:"1. Web Fundamentals", i:["HTML Structure","CSS Styling","JavaScript Logic","DOM & Browser Rendering","HTTP/HTTPS Protocol"]},
+  { t:"2. Frontend Layer", i:["Component Frameworks (React/Vue/Angular)","State Management","Routing","Styling Systems","Build Tools (Vite/Webpack)"]},
+  { t:"3. Backend Layer", i:["Server Runtime (Node.js/Python/Go/Java)","Routing & Middleware","Business Logic","Authentication & Authorization","API Design (REST/GraphQL)"]},
+  { t:"4. Database Layer", i:["Relational Databases (SQL)","NoSQL Databases","ORMs/ODMs","Caching (Redis)","Data Modeling & Normalization"]},
+  { t:"5. DevOps & Deployment", i:["Version Control (Git)","CI/CD Pipelines","Containerization (Docker)","Cloud Hosting","Monitoring & Logging"]},
+  { t:"6. Application Architecture", i:["Monolith vs Microservices","Serverless","JAMstack","3-Tier Architecture","Event-Driven Architecture"]},
+  { t:"7. Common Full Stack Security Risks", i:["SQL Injection","Cross-Site Scripting (XSS)","Cross-Site Request Forgery (CSRF)","Insecure Authentication","Broken Access Control","Sensitive Data Exposure","Server-Side Request Forgery (SSRF)","Insecure Deserialization"]},
+  { t:"8. Common Misconfigurations", i:["Exposed .env Files","Default/Weak Credentials","Overly Permissive CORS","Missing Rate Limiting","Verbose Error Messages Leaking Stack Traces","Unpatched Dependencies"]},
+  { t:"9. Secure Development Checklist", i:[
+    {t:"Input & Data Handling", sub:["Validate and sanitize all user input","Use parameterized queries / ORM","Escape output to prevent XSS","Enforce strict CORS policy"]},
+    {t:"Auth & Secrets", sub:["Hash passwords with bcrypt/argon2","Store secrets in environment variables, never in code","Rotate API keys and tokens","Use HTTPS everywhere"]}
+  ]},
+  { t:"10. Performance Considerations", i:["Code Splitting & Lazy Loading","Database Indexing","Caching Layers (CDN, Redis)","Image & Asset Optimization","Query Optimization (N+1 problem)"]},
+  { t:"11. Development Toolset", i:[
+    {t:"Editor & Debugging", sub:["VS Code","Chrome DevTools","React/Redux DevTools"]},
+    {t:"API & Testing", sub:["Postman/Insomnia","Jest","Cypress/Playwright"]}
+  ]},
+  { t:"12. Team Workflow", i:["Agile/Scrum Basics","Code Review via Pull Requests","Branching Strategies (Git Flow, trunk-based)","Documentation & READMEs"]},
+  { t:"13. Full Stack Project Workflow", i:["Requirements & Planning","Architecture Design","Frontend & Backend Development","Testing","Deployment","Monitoring & Iteration"]}
+]},
+
+{ id:8, title:"Full Stack Architecture — Deep Dive", sec:[
+  { t:"REST API Design Principles", kind:'text', paras:[
+    "<strong>REST (Representational State Transfer)</strong> is an architectural style for designing networked APIs around <strong>resources</strong> — nouns like /users or /orders — manipulated through standard HTTP verbs: <strong>GET</strong> (read), <strong>POST</strong> (create), <strong>PUT/PATCH</strong> (update), and <strong>DELETE</strong> (remove).",
+    "Well-designed REST APIs are <strong>stateless</strong> — each request contains all the information needed to process it, with no server-side session state between requests — and use HTTP status codes correctly (200 for success, 400 for client error, 401/403 for auth failures, 404 for not found, 500 for server error) so clients can reason about outcomes without parsing response bodies."
+  ]},
+  { t:"Database Design & Normalization", kind:'text', paras:[
+    "Good database design starts with identifying <strong>entities</strong> (users, products, orders) and their relationships (one-to-one, one-to-many, many-to-many), then organizing data to minimize redundancy through a process called <strong>normalization</strong>.",
+    "In relational databases, <strong>normal forms (1NF, 2NF, 3NF)</strong> progressively eliminate duplicate data and update anomalies by splitting information into related tables connected via foreign keys. In some high-read scenarios, <strong>denormalization</strong> is deliberately applied to trade some redundancy for query performance."
+  ]},
+  { t:"Authentication vs Authorization in Web Apps", kind:'text', paras:[
+    "<strong>Authentication</strong> confirms who a user is — typically via a password, OAuth login, or a valid session/token. <strong>Authorization</strong> determines what that authenticated user is allowed to do — enforced through role-based access control (RBAC) or attribute-based access control (ABAC) checks on every protected route.",
+    "A common and secure pattern is issuing a short-lived <strong>JWT (JSON Web Token)</strong> after login, paired with a longer-lived <strong>refresh token</strong> stored securely (often as an HTTP-only cookie) to renew access without forcing the user to log in repeatedly, while limiting the damage window if a token is ever stolen."
+  ]},
+  { t:"Scalability & the Full Stack", kind:'text', paras:[
+    "As applications grow, each layer of the stack has its own scaling strategy, and a mature full stack engineer understands how they interact."
+  ], list:[
+    "Frontend: CDN distribution, code splitting, edge caching",
+    "Backend: horizontal scaling (more instances) behind a load balancer",
+    "Database: read replicas, connection pooling, sharding for very large datasets",
+    "Caching: Redis/CDN layers to absorb repeated read traffic",
+    "Asynchronous processing: message queues (RabbitMQ/Kafka) to decouple slow operations from the request/response cycle",
+    "Understanding where a bottleneck actually lives — frontend rendering, backend compute, or database I/O — is what separates guesswork from effective, targeted optimization at scale."
+  ]}
+]}
+];
+// ---------- render ----------
+const main = document.getElementById('main');
+const tocGrid = document.getElementById('tocGrid');
+let sectionCount = 0, topicCount = 0;
+const letters = "ABCDEFGH";
+
+PARTS.forEach((part, idx)=>{
+  sectionCount += part.sec.length;
+  part.sec.forEach(s=> topicCount += topicCountOf(s));
+
+  const partEl = document.createElement('div');
+  partEl.className = 'part';
+  partEl.id = 'part-'+part.id;
+
+  const noteHTML = part.note ? `<p class="part-sub">${part.note}</p>` : '';
+
+  partEl.innerHTML = `
+    <div class="part-head"><span class="letter">${letters[idx]}</span><h2>${part.title}</h2></div>
+    ${noteHTML}
+    <div class="sections"></div>
+  `;
+
+  const secHost = partEl.querySelector('.sections');
+  part.sec.forEach(s=>{
+    const d = document.createElement('details');
+    d.className = 'section';
+    const toolsBadge = s.tools ? ` <span class="code">tools: ${s.tools.join(', ')}</span>` : '';
+    d.innerHTML = `<summary>${s.t} <span class="code">/${topicCountOf(s)} items/</span>${toolsBadge}</summary>
+      <div class="section-body">${bodyHTML(s)}</div>`;
+    secHost.appendChild(d);
+  });
+
+  main.appendChild(partEl);
+
+  const a = document.createElement('a');
+  a.href = '#part-'+part.id;
+  a.innerHTML = `<b>${letters[idx]}</b> ${part.title}`;
+  tocGrid.appendChild(a);
+});
+
+document.getElementById('statSections').textContent = sectionCount;
+document.getElementById('statTopics').textContent = topicCount;
+
+document.getElementById('expandAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=true);
+document.getElementById('collapseAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=false);
+
+document.getElementById('search').addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.part').forEach(part=>{
+    let partMatch = false;
+    part.querySelectorAll('details.section').forEach(d=>{
+      const text = d.textContent.toLowerCase();
+      const match = q === '' || text.includes(q);
+      d.classList.toggle('hidden', !match);
+      if(match){ d.open = q !== ''; partMatch = true; }
+    });
+    part.classList.toggle('hidden', !partMatch);
+  });
+});
+</script>
+</body>
+</html>

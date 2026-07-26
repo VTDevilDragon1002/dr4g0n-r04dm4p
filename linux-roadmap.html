@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Roadmap // dr4g0n-r04dm4p</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Cinzel:wght@700;900&display=swap');
+  :root{
+    --bg:#0a0705; --bg-alt:#130d0a; --bg-card:#160f0b; --line:#2a1c14;
+    --ember:#ff6a2b; --crimson:#c81d25; --gold:#d4a017;
+    --text:#ecdfd1; --text-dim:#9c8a78; --text-dimmer:#6e5f52;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:
+      radial-gradient(ellipse 70% 30% at 50% 0%, rgba(212,160,23,.08), transparent 70%), var(--bg);
+    color:var(--text); font-family:'JetBrains Mono', monospace; line-height:1.5;
+    padding-bottom:6rem;
+  }
+  a{color:var(--gold);}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,7,5,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:.9rem 1.5rem;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none;}
+  .brand .dot{color:var(--gold);}
+  .brand span{font-family:'Cinzel', serif; font-weight:900; letter-spacing:.03em; font-size:1.05rem; color:var(--text);}
+  header .meta{font-size:.72rem; color:var(--text-dim); letter-spacing:.08em;}
+  header .meta a{color:var(--ember); text-decoration:none;}
+  .back{
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+    color:var(--text-dim); border:1px solid var(--line); padding:.4rem .8rem; border-radius:4px; transition:.2s;
+  }
+  .back:hover{color:var(--gold); border-color:var(--gold);}
+
+  .hero{padding:4.5rem 1.5rem 2.5rem; text-align:center; max-width:820px; margin:0 auto;}
+  .hero .eyebrow{font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .hero h1{
+    font-family:'Cinzel', serif; font-weight:900; font-size:clamp(1.8rem,5vw,3rem);
+    background:linear-gradient(120deg, var(--gold), var(--ember) 55%, var(--crimson));
+    -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.2; margin-bottom:1rem;
+  }
+  .hero p{color:var(--text-dim); font-size:.9rem; max-width:640px; margin:0 auto;}
+  .hero .stats{display:flex; justify-content:center; gap:2.2rem; margin-top:2rem; flex-wrap:wrap;}
+  .hero .stats div{text-align:center;}
+  .hero .stats b{display:block; font-size:1.4rem; color:var(--gold); font-family:'Cinzel',serif;}
+  .hero .stats span{font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dimmer);}
+
+  .controls{max-width:900px; margin:0 auto 2rem; padding:0 1.5rem; display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center;}
+  .controls button{
+    font-family:inherit; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--bg-alt); color:var(--text-dim); border:1px solid var(--line);
+    padding:.5rem 1rem; border-radius:4px; cursor:pointer; transition:.2s;
+  }
+  .controls button:hover{color:var(--gold); border-color:var(--gold);}
+  #search{
+    font-family:inherit; background:var(--bg-alt); border:1px solid var(--line); color:var(--text);
+    padding:.5rem 1rem; border-radius:4px; font-size:.78rem; min-width:220px; flex:1; max-width:320px;
+  }
+  #search::placeholder{color:var(--text-dimmer);}
+
+  .toc{max-width:900px; margin:0 auto 3rem; padding:1.4rem 1.6rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:8px;}
+  .toc h3{font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .toc-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:.4rem .8rem;}
+  .toc-grid a{font-size:.78rem; color:var(--text-dim); text-decoration:none; display:flex; gap:.5rem; padding:.25rem 0; transition:.15s;}
+  .toc-grid a:hover{color:var(--gold);}
+  .toc-grid a b{color:var(--ember); font-weight:700;}
+
+  main{max-width:900px; margin:0 auto; padding:0 1.5rem;}
+  .part{margin-bottom:2.6rem; scroll-margin-top:5rem;}
+  .part-head{
+    display:flex; align-items:baseline; gap:1rem; padding:1rem 1.2rem;
+    background:linear-gradient(90deg, var(--bg-card), transparent);
+    border-left:3px solid var(--gold); border-radius:4px; margin-bottom:.8rem;
+  }
+  .part-head .letter{font-family:'Cinzel',serif; font-size:1.6rem; color:var(--gold); font-weight:900; opacity:.8;}
+  .part-head h2{font-size:1.1rem; color:var(--text); letter-spacing:.02em;}
+  .part-sub{color:var(--text-dimmer); font-size:.78rem; margin:0 0 .8rem 3.4rem; font-style:italic;}
+
+  details.section{border:1px solid var(--line); border-radius:6px; margin-bottom:.55rem; background:var(--bg-alt); overflow:hidden;}
+  details.section[open]{border-color:#3a2418;}
+  details.section summary{
+    cursor:pointer; list-style:none; padding:.75rem 1.1rem; display:flex; align-items:center; gap:.7rem;
+    font-size:.85rem; color:var(--text); font-weight:500; -webkit-tap-highlight-color:transparent;
+  }
+  details.section summary::-webkit-details-marker{display:none;}
+  details.section summary::before{content:'▸'; color:var(--ember); font-size:.75rem; transition:transform .2s; flex-shrink:0;}
+  details.section[open] summary::before{transform:rotate(90deg);}
+  details.section summary .code{color:var(--gold); font-size:.72rem; opacity:.75;}
+  .section-body{padding:.2rem 1.3rem 1rem 2.5rem;}
+  .section-body ul{list-style:none;}
+  .section-body > ul > li{position:relative; padding:.28rem 0 .28rem 1rem; font-size:.82rem; color:var(--text-dim); border-left:1px solid var(--line); margin-left:.1rem;}
+  .section-body > ul > li::before{content:''; position:absolute; left:-4px; top:1rem; width:7px; height:1px; background:var(--line);}
+  .section-body ul li ul{margin:.35rem 0 .35rem .4rem; padding-left:1rem; border-left:1px dashed var(--line);}
+  .section-body ul li ul li{font-size:.78rem; color:var(--text-dimmer); padding:.18rem 0;}
+  .section-body p{font-size:.83rem; color:var(--text-dim); margin-bottom:.7rem;}
+  .section-body p strong{color:var(--text);}
+  .section-body .label{font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--ember); margin:.9rem 0 .35rem;}
+
+  table{width:100%; border-collapse:collapse; font-size:.78rem; margin-bottom:.4rem;}
+  table caption{text-align:left; color:var(--gold); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem;}
+  th,td{padding:.5rem .6rem; border:1px solid var(--line); text-align:left; vertical-align:top;}
+  th{background:var(--bg-card); color:var(--gold); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;}
+  td{color:var(--text-dim);}
+  td b{color:var(--text);}
+
+  .device-card{border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.3rem; margin-bottom:.9rem; background:var(--bg-card);}
+  .device-card h4{color:var(--ember); font-size:.95rem; margin-bottom:.5rem; font-family:'Cinzel',serif;}
+  .device-card p{font-size:.82rem; color:var(--text-dim); margin-bottom:.6rem;}
+  .device-card .label{font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin:.7rem 0 .3rem;}
+  .device-card ul{list-style:none; padding-left:0;}
+  .device-card ul li{font-size:.78rem; color:var(--text-dim); padding:.15rem 0 .15rem 1rem; position:relative;}
+  .device-card ul li::before{content:'—'; position:absolute; left:0; color:var(--text-dimmer);}
+
+  footer{text-align:center; color:var(--text-dimmer); font-size:.68rem; letter-spacing:.1em; margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line);}
+  footer .fire{color:var(--gold);}
+  .hidden{display:none !important;}
+  @media (max-width:600px){ .hero{padding:3rem 1rem 2rem;} .toc-grid{grid-template-columns:1fr;} .section-body{padding-left:1.4rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html"><span class="dot"></span><span>VT Dr4g0n</span></a>
+  <div class="meta">@<a href="https://instagram.com/vt_dr4g0n" target="_blank" rel="noopener">vt_dr4g0n</a> — dr4g0n-r04dm4p</div>
+  <a class="back" href="index.html">← Back to hub</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Track 03</div>
+  <h1>Linux Roadmap</h1>
+  <div class="stats">
+    <div><b id="statParts">8</b><span>Parts</span></div>
+    <div><b id="statSections">0</b><span>Sections</span></div>
+    <div><b id="statTopics">0</b><span>Topics</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="Search a command, tool, phase, concept…">
+  <button id="expandAll">Expand all</button>
+  <button id="collapseAll">Collapse all</button>
+</div>
+
+<div class="toc" id="toc">
+  <h3>Jump to part</h3>
+  <div class="toc-grid" id="tocGrid"></div>
+</div>
+
+<main id="main"></main>
+
+<footer>8 parts · Filesystem to enterprise Linux administration · <span class="fire">dr4g0n-r04dm4p</span> · linux-roadmap.html</footer>
+
+<script>
+// ---------- helpers ----------
+function itemHTML(item){
+  if(typeof item === 'string') return `<li>${item}</li>`;
+  const subs = item.sub.map(s=>`<li>${s}</li>`).join('');
+  return `<li>${item.t}<ul>${subs}</ul></li>`;
+}
+function listBlock(items){ return `<ul>${items.map(itemHTML).join('')}</ul>`; }
+function textBlock(paras){ return paras.map(p=>`<p>${p}</p>`).join(''); }
+function tableBlock(tbl){
+  const head = `<tr>${tbl.headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const rows = tbl.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+  return `<table>${tbl.caption?`<caption>${tbl.caption}</caption>`:''}${head}${rows}</table>`;
+}
+function deviceCard(d){
+  return `<div class="device-card">
+    <h4>${d.name}</h4>
+    ${textBlock(d.def)}
+    <div class="label">Functions</div><ul>${d.functions.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Advantages</div><ul>${d.advantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Disadvantages</div><ul>${d.disadvantages.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="label">Real-World Example</div><p>${d.example}</p>
+  </div>`;
+}
+
+// ---------- DATA ----------
+const PARTS = [
+
+{ id:1, title:"Core Linux Fundamentals", sec:[
+  { t:"What is Linux?", kind:'text', paras:[
+    "<strong>Linux</strong> is a free, open-source, Unix-like operating system kernel originally created by <strong>Linus Torvalds</strong> in 1991. Combined with GNU tools and utilities, it forms complete operating systems known as <strong>GNU/Linux distributions</strong>. Linux powers the vast majority of the world's servers, cloud infrastructure, supercomputers, Android devices, and embedded systems.",
+    "Because Linux is open source, its source code is publicly available, can be modified freely, and is maintained by a massive global community of developers. This transparency makes Linux a favorite among cybersecurity professionals, since the internals of the system can be fully inspected, audited, and hardened."
+  ]},
+  { t:"The Linux Kernel", kind:'text', paras:[
+    "The <strong>kernel</strong> is the core component of the operating system. It manages hardware resources — CPU, memory, storage, and peripheral devices — and provides an interface between hardware and software through <strong>system calls</strong>.",
+    "The kernel handles process scheduling, memory management, device drivers, filesystem access, and network stack operations. Everything a user or application does eventually passes through the kernel."
+  ], list:["Monolithic kernel design","Loadable Kernel Modules (LKMs)","Process scheduler","Virtual memory manager","Device driver interface","Network stack"]},
+  { t:"The Shell", kind:'text', paras:[
+    "The <strong>shell</strong> is a command-line interpreter that allows users to interact with the operating system by typing commands. It reads user input, interprets it, and passes instructions to the kernel for execution.",
+    "Popular shells include <strong>Bash</strong> (Bourne Again Shell — the default on most distros), <strong>Zsh</strong> (extensible, used in Kali Linux by default), <strong>Fish</strong>, <strong>Dash</strong>, and <strong>Sh</strong>. Shells also support scripting, allowing repetitive tasks and automation through shell scripts."
+  ]},
+  { t:"Linux Distributions", kind:'text', paras:[
+    "A <strong>Linux distribution (distro)</strong> is a complete operating system built around the Linux kernel, bundled with a package manager, desktop environment (optional), system utilities, and pre-installed software.",
+    "Distributions are typically grouped by their package management family and intended use case, and choosing the right distro matters a great deal for cybersecurity work."
+  ], list:[
+    "Debian family (APT) — Debian, Ubuntu, Kali Linux, Parrot OS",
+    "Red Hat family (RPM/DNF) — RHEL, CentOS Stream, Fedora, Rocky Linux, AlmaLinux",
+    "Arch family (Pacman) — Arch Linux, Manjaro, BlackArch",
+    "Security-focused — Kali Linux, Parrot Security OS, BlackArch, Tails",
+    "Enterprise/server — RHEL, SUSE Linux Enterprise, Ubuntu Server",
+    "Lightweight/embedded — Alpine Linux, Tiny Core Linux"
+  ]},
+  { t:"Linux Philosophy & Open Source Licensing", kind:'text', paras:[
+    "The Unix/Linux philosophy emphasizes writing small, modular programs that do one thing well and can be chained together (piped) to accomplish complex tasks. Everything is treated as a file, and plain text is preferred as a universal interface.",
+    "Linux is released primarily under the <strong>GNU General Public License (GPL)</strong>, which guarantees users the freedom to run, study, modify, and redistribute the software. This open licensing model is what enables the massive ecosystem of free security tools built on top of Linux."
+  ]}
+]},
+
+{ id:2, title:"Linux Architecture & Boot Process", sec:[
+  { t:"2.1 Linux System Architecture Layers", i:[
+    {t:"Hardware Layer — the physical components: CPU, RAM, storage, NIC, peripherals.", sub:["Managed entirely through the kernel","No direct user access without drivers"]},
+    {t:"Kernel Layer — the core that talks directly to hardware via system calls.", sub:["Process management","Memory management","Device drivers","Filesystem management","Network stack"]},
+    {t:"Shell Layer — the command interpreter between the user and the kernel.", sub:["Bash, Zsh, Fish, Dash","Interprets typed commands","Runs shell scripts"]},
+    {t:"Application Layer — user-facing programs and utilities.", sub:["System utilities (ls, ps, top)","Security tools (nmap, Metasploit)","GUI applications (if installed)"]}
+  ]},
+  { t:"2.2 The Linux Boot Process", kind:'text', paras:["A Linux system boots through a well-defined sequence of stages, each handing control to the next:"], list:[
+    "1. BIOS/UEFI → Power-on self-test (POST), hardware initialization",
+    "2. Bootloader (GRUB/GRUB2) → Loads the kernel into memory",
+    "3. Kernel Initialization → Mounts root filesystem, initializes drivers",
+    "4. Init System (systemd/SysVinit) → Starts as PID 1, manages services",
+    "5. Runlevel / Target → Determines system state (multi-user, graphical, rescue)",
+    "6. Login Prompt / Display Manager → User authentication"
+  ]},
+  { t:"2.3 systemd — The Modern Init System", kind:'text', paras:[
+    "<strong>systemd</strong> is the init system and service manager used by most modern distributions (Ubuntu, Debian, Fedora, RHEL, Kali). It replaced the older SysVinit and manages boot, services, sockets, timers, and logging."
+  ], list:["systemctl start/stop/restart/enable/disable/status","journalctl for centralized logging","systemd targets replace old runlevels","Unit files (.service, .timer, .socket, .mount)"]},
+  { t:"2.4 Linux Directory Structure (FHS)", kind:'text', paras:["The Filesystem Hierarchy Standard (FHS) defines a consistent directory layout across distributions:"], list:[
+    "/ → Root directory, top of the hierarchy",
+    "/bin, /usr/bin → Essential user command binaries",
+    "/sbin, /usr/sbin → System administration binaries",
+    "/etc → System-wide configuration files",
+    "/home → User home directories",
+    "/root → Root user's home directory",
+    "/var → Variable data: logs, mail, spool, cache",
+    "/tmp → Temporary files (cleared on reboot)",
+    "/opt → Optional/third-party software",
+    "/dev → Device files",
+    "/proc → Virtual filesystem exposing kernel & process info",
+    "/sys → Virtual filesystem exposing kernel/device info",
+    "/mnt, /media → Mount points for filesystems and removable media",
+    "/lib, /usr/lib → Shared libraries",
+    "/boot → Kernel, initrd, and bootloader files"
+  ]},
+  { t:"2.5 Process Lifecycle", kind:'text', paras:["Every running program on Linux is a process, tracked and scheduled by the kernel."], list:[
+    "1. Fork → Parent process spawns a child process",
+    "2. Exec → Child process loads and runs a new program",
+    "3. Running / Ready / Waiting → Scheduler assigns CPU time",
+    "4. Zombie → Process has finished but parent hasn't reaped it",
+    "5. Terminated → Process ends and resources are released"
+  ]}
+]},
+
+{ id:3, title:"Linux Certifications", sec:[
+  { t:"Entry Level", kind:'table', table:{caption:"Entry Level", headers:["Cert","Importance","Notes"], rows:[
+    ["Linux Essentials (LPI)","3","Beginner-friendly, great starting point"],
+    ["CompTIA Linux+ (XK0-005)","5","Industry-standard vendor-neutral Linux certification"],
+    ["LPIC-1 (LPI)","4","Junior-level system administration certification"],
+    ["Cisco Linux Unhatched / Intro to Linux (LFS101)","3","Free Linux Foundation training course"],
+    ["Google IT Support (Coursera)","3","Covers Linux basics within broader IT support track"]
+  ]}},
+  { t:"Intermediate Level", kind:'table', table:{caption:"Intermediate Level", headers:["Cert","Importance","Notes"], rows:[
+    ["LPIC-2 (LPI)","4","Advanced system administration — networking, storage, security"],
+    ["Red Hat Certified System Administrator (RHCSA)","5","Highly respected hands-on RHEL administration exam"],
+    ["Oracle Linux OCA","3","Oracle-specific Linux fundamentals"],
+    ["SUSE Certified Administrator (SCA)","3","SUSE Linux Enterprise administration"],
+    ["Certified Kubernetes Administrator (CKA)","4","Container orchestration on Linux"]
+  ]}},
+  { t:"Advanced Level", kind:'table', table:{caption:"Advanced Level", headers:["Cert","Importance","Notes"], rows:[
+    ["Red Hat Certified Engineer (RHCE)","5","Advanced automation with Ansible on RHEL"],
+    ["LPIC-3 (LPI)","4","Enterprise specialization — mixed environments, security, virtualization"],
+    ["Offensive Security OSCP","5","Requires strong Linux command-line fluency for exploitation"],
+    ["GIAC GCUX (Certified UNIX Security Administrator)","4","Deep UNIX/Linux security hardening"],
+    ["Red Hat Certified Architect (RHCA)","4","Highest level of Red Hat certification path"]
+  ]}}
+]},
+
+{ id:4, title:"Linux Environments & Access", sec:[
+  { t:"4.1 Local vs Remote Access", kind:'text', paras:["Linux systems can be administered directly at the console or remotely over a network."], list:["TTY / Virtual Console — direct local login","SSH (Secure Shell) — encrypted remote access, industry standard","Telnet — legacy, unencrypted remote access (avoid in production)","Serial console — used for headless servers and network devices"]},
+  { t:"4.2 SSH (Secure Shell)", kind:'text', paras:["SSH provides an encrypted channel for remote administration, file transfer, and tunneling."], list:["Password authentication","Public/private key authentication","SSH config file (~/.ssh/config)","Port forwarding (local, remote, dynamic)","SCP / SFTP for file transfer","SSH hardening: disable root login, change default port, key-only auth"]},
+  { t:"4.3 Package Management", kind:'text', paras:["Package managers install, update, and remove software along with their dependencies. The tool depends on the distro family."], list:["APT (Debian/Ubuntu/Kali) — apt, apt-get, dpkg","DNF/YUM (RHEL/Fedora/CentOS) — dnf, yum, rpm","Pacman (Arch/Manjaro/BlackArch)","Zypper (SUSE)","Snap / Flatpak — universal cross-distro packages","Compiling from source (./configure, make, make install)"]},
+  { t:"4.4 Filesystem Types", kind:'text', paras:["Linux supports many filesystem types depending on the storage medium and use case."], list:["ext4 — default on most Linux distros","XFS — high-performance, used on RHEL/CentOS servers","Btrfs — modern, supports snapshots and pooling","FAT32/exFAT/NTFS — for cross-compatibility with Windows/USB","tmpfs — RAM-backed temporary filesystem","Swap — virtual memory extension on disk"]},
+  { t:"4.5 Virtualization & Containers", kind:'text', paras:["Linux is the foundation for nearly all modern virtualization and containerization technologies."], list:["VirtualBox / VMware — full hardware virtualization","KVM/QEMU — native Linux hypervisor","Docker — application containerization","LXC/LXD — lightweight system containers","Kubernetes — container orchestration at scale"]}
+]},
+{ id:5, title:"Linux Tools & Command Categories — Deep Dive", sec:[
+  { t:"File Management, Process Control, Permissions, Package Managers, Networking, Text Processing, Monitoring, Archiving", kind:'devices', devices:[
+    { name:"File Management Commands", def:["Commands used to navigate, create, copy, move, delete, and inspect files and directories. These form the backbone of everyday Linux usage and scripting."],
+      functions:["ls, cd, pwd — navigation.","cp, mv, rm, mkdir, rmdir — file/directory operations.","touch, cat, less, head, tail — file creation and viewing.","find, locate — searching the filesystem.","ln — creating hard/symbolic links."],
+      advantages:["Fast and scriptable.","Works identically over SSH as it does locally.","Composable with pipes and redirection."],
+      disadvantages:["Steep learning curve for beginners.","Destructive commands (rm -rf) have no undo."],
+      example:"A sysadmin uses find / -name '*.log' -mtime +30 to locate and archive log files older than 30 days." },
+    { name:"Process Management Commands", def:["Tools used to view, control, prioritize, and terminate running processes on the system."],
+      functions:["ps, top, htop — view running processes.","kill, killall, pkill — terminate processes by PID/name.","nice, renice — adjust process priority.","jobs, fg, bg, nohup — job control and backgrounding.","systemctl — manage systemd services."],
+      advantages:["Full visibility into system resource usage.","Fine-grained control over process priority and lifecycle.","Essential for incident response and malware triage."],
+      disadvantages:["Killing the wrong PID can crash critical services.","Requires understanding of signals (SIGTERM vs SIGKILL)."],
+      example:"An analyst runs ps aux | grep suspicious_proc, then kill -9 <PID> to terminate a malicious process during incident response." },
+    { name:"User & Permission Management", def:["Commands for creating accounts, managing groups, and controlling the classic Linux read/write/execute permission model."],
+      functions:["useradd, usermod, userdel, passwd — account management.","groupadd, groups, gpasswd — group management.","chmod, chown, chgrp — permission and ownership control.","sudo, su — privilege escalation.","umask — default permission control."],
+      advantages:["Granular control over who can access what.","Foundation of the Linux security model.","Auditable via /etc/passwd, /etc/shadow, /etc/group."],
+      disadvantages:["Misconfigured permissions are a top cause of privilege escalation.","SUID/SGID misuse can create serious vulnerabilities."],
+      example:"A pentester finds a misconfigured SUID binary using find / -perm -4000 and exploits it for privilege escalation." },
+    { name:"Package Managers", def:["Tools that install, update, remove, and track software dependencies across a Linux distribution."],
+      functions:["apt / apt-get / dpkg (Debian family).","dnf / yum / rpm (Red Hat family).","pacman (Arch family).","snap / flatpak (universal packages)."],
+      advantages:["Automatic dependency resolution.","Centralized software repositories.","Simplifies patching and updates."],
+      disadvantages:["Repository compromise can lead to supply-chain attacks.","Version conflicts between distros."],
+      example:"A Kali user runs sudo apt update && sudo apt install seclists to install a fresh wordlist collection." },
+    { name:"Networking Commands", def:["Utilities to configure interfaces, test connectivity, and inspect network state directly from the terminal."],
+      functions:["ip, ifconfig — interface configuration.","ping, traceroute — connectivity testing.","netstat, ss — socket/connection inspection.","curl, wget — HTTP requests and downloads.","dig, nslookup — DNS queries."],
+      advantages:["Enables full network diagnostics without a GUI.","Scriptable for automation and monitoring.","Core skillset for both sysadmins and pentesters."],
+      disadvantages:["Command syntax varies between distros (ifconfig deprecated in favor of ip).","Requires elevated privileges for some operations."],
+      example:"A security engineer runs ss -tulnp to list all listening ports and the processes bound to them during a compromise assessment." },
+    { name:"Text Processing Tools", def:["Commands for searching, filtering, transforming, and extracting data from text streams and files — a Linux superpower."],
+      functions:["grep, egrep — pattern searching.","sed — stream editing and substitution.","awk — field-based text processing.","cut, sort, uniq, wc — extraction and counting.","tr — character translation."],
+      advantages:["Extremely powerful when chained with pipes.","Enables rapid log analysis and data parsing.","Core to writing security automation scripts."],
+      disadvantages:["Regex syntax can be unforgiving for beginners.","Complex one-liners can become unreadable."],
+      example:"An analyst pipes auth.log through grep 'Failed password' | awk '{print $11}' | sort | uniq -c to count failed SSH login attempts per IP." },
+    { name:"System Monitoring Tools", def:["Utilities that provide real-time and historical visibility into CPU, memory, disk, and system health."],
+      functions:["top, htop — live process/resource view.","vmstat, iostat — performance statistics.","df, du — disk usage.","free — memory usage.","journalctl, dmesg — system and kernel logs."],
+      advantages:["Quickly identifies resource bottlenecks.","Useful for detecting cryptominers or resource-abuse malware.","Built into every distro, no install required."],
+      disadvantages:["Text-based tools can be less intuitive than GUI dashboards.","Historical data requires separate logging/monitoring stacks (e.g. Prometheus)."],
+      example:"A responder notices abnormal CPU usage via top, correlates it with journalctl -xe, and identifies a cryptomining process." },
+    { name:"Archiving & Compression Tools", def:["Tools for bundling and compressing files for storage, backup, or transfer."],
+      functions:["tar — archive creation/extraction.","gzip, gunzip, bzip2, xz — compression algorithms.","zip, unzip — cross-platform archive format.","rsync — efficient file synchronization/backup."],
+      advantages:["Reduces storage and transfer size.","rsync enables incremental, bandwidth-efficient backups.","Standard format for distributing security tools and exploits."],
+      disadvantages:["Archive bombs can be used maliciously.","Improper permissions on extraction can overwrite system files."],
+      example:"A sysadmin schedules a nightly rsync -avz /data/ backup@remote:/backups/ job for offsite backups." }
+  ]}
+]},
+{ id:6, title:"SkillMate — Linux Mastery Pathway (Phase 0–44)", note:"Learn Linux → Master the Shell → Administer Systems → Harden & Secure → Automate → Prepare for Certifications → Become Job Ready", sec:[
+  { t:"Phase 0 — Welcome", i:["Introduction to Linux","How to use this pathway","Career Roadmap","Required Software","Lab Setup (VirtualBox/VMware)","Learning Methodology"]},
+  { t:"Phase 1 — Linux Fundamentals", i:["What is Linux?","History of Unix & Linux","Kernel vs Distribution","Open Source Licensing","Linux Philosophy","Choosing a Distro","Installing Linux (dual boot / VM)"]},
+  { t:"Phase 2 — The Shell & Terminal", i:["What is a Shell?","Bash vs Zsh vs Fish","Terminal Emulators","Command Syntax","man pages & --help","Command History","Tab Completion","🔧 Lab: Terminal Basics"]},
+  { t:"Phase 3 — Filesystem & Navigation", i:["Filesystem Hierarchy Standard (FHS)","Absolute vs Relative Paths","cd, pwd, ls","Hidden Files","Wildcards & Globbing","🔧 Lab: Navigation Drills"]},
+  { t:"Phase 4 — File Operations", i:["touch, mkdir, rmdir","cp, mv, rm","cat, less, more, head, tail","find, locate, which, whereis","ln (hard & symbolic links)","🔧 Lab: File Manipulation"]},
+  { t:"Phase 5 — Users, Groups & Permissions", i:["/etc/passwd & /etc/shadow","useradd, usermod, userdel","groupadd, groups","chmod, chown, chgrp","Octal & Symbolic Permissions","SUID, SGID, Sticky Bit","umask","🔧 Lab: Permission Challenges"]},
+  { t:"Phase 6 — Process Management", i:["What is a Process?","ps, top, htop","Foreground vs Background Jobs","kill, killall, pkill, signals","nice & renice","cron & at scheduling","🔧 Lab: Process Control"]},
+  { t:"Phase 7 — Package Management", i:["APT (Debian/Ubuntu/Kali)","DNF/YUM (RHEL/Fedora)","Pacman (Arch)","Snap & Flatpak","Building from Source","Repository Management","🔧 Lab: Install & Manage Software"]},
+  { t:"Phase 8 — Text Processing & Editors", i:["vim basics","nano","grep & regex","sed","awk","cut, sort, uniq, wc, tr","🔧 Lab: Log Parsing Challenge"]},
+  { t:"Phase 9 — Shell Scripting", i:["Shebang & Script Structure","Variables","Conditionals (if/else/case)","Loops (for/while/until)","Functions","Arguments & Exit Codes","Error Handling","🔧 Lab: Automation Scripts"]},
+  { t:"Phase 10 — Networking Basics on Linux", i:["ip / ifconfig","ping, traceroute","netstat, ss","curl, wget","hostname, dig, nslookup","/etc/hosts, /etc/resolv.conf","🔧 Lab: Network Configuration"]},
+  { t:"Phase 11 — SSH & Remote Access", note:"Secure remote administration and file transfer.", tools:["OpenSSH","SCP","SFTP"], i:["SSH Fundamentals","Key-Based Authentication","SSH Config File","Port Forwarding (Local/Remote/Dynamic)","SCP & SFTP","SSH Hardening","🔧 Lab: Configure Key-Only SSH Access"]},
+  { t:"Phase 12 — System Monitoring & Logging", note:"Observe system health and analyze historical events.", tools:["top","vmstat","journalctl","dmesg"], i:["CPU & Memory Monitoring","Disk Usage (df, du)","journald & journalctl","Syslog & rsyslog","Log Rotation (logrotate)","🔧 Lab: Baseline a Healthy System"]},
+  { t:"Phase 13 — Storage & Filesystems", i:["Partitions & fdisk/parted","Filesystem Types (ext4, XFS, Btrfs)","mkfs, mount, umount","/etc/fstab","LVM (Logical Volume Manager)","Swap Configuration","🔧 Lab: Partition & Mount a New Disk"]},
+  { t:"Phase 14 — Archiving, Compression & Backups", note:"Package data for storage, transfer, and disaster recovery.", tools:["tar","gzip","rsync"], i:["tar Archives","gzip/bzip2/xz Compression","zip/unzip","rsync Synchronization","Backup Strategies","🔧 Lab: Automated Backup Script"]},
+  { t:"Phase 15 — systemd & Service Management", i:["systemd Architecture","Unit Files","systemctl (start/stop/enable/status)","Creating Custom Services","Targets vs Runlevels","🔧 Lab: Write a Custom systemd Service"]},
+  { t:"Phase 16 — Linux Security Fundamentals", i:["CIA Triad on Linux","Principle of Least Privilege","Attack Surface Reduction","Security Updates & Patch Management","Auditd Basics","🔧 Lab: Baseline Hardening Checklist"]},
+  { t:"Phase 17 — File Permissions Deep Dive & Privilege Escalation", note:"Understand and exploit misconfigured permission models.", tools:["find","GTFOBins"], i:["SUID/SGID Exploitation","Writable /etc/passwd","Sudo Misconfigurations","Cron Job Abuse","Capabilities (getcap/setcap)","🔧 Lab: TryHackMe-style PrivEsc Room"]},
+  { t:"Phase 18 — Firewall & Network Filtering", note:"Control inbound/outbound traffic at the host level.", tools:["iptables","nftables","ufw","firewalld"], i:["iptables Chains & Tables","nftables Basics","UFW (Uncomplicated Firewall)","firewalld Zones","Port Blocking & Allow Rules","🔧 Lab: Harden a Server's Firewall"]},
+  { t:"Phase 19 — SELinux & AppArmor", note:"Mandatory Access Control frameworks used in enterprise hardening.", tools:["SELinux","AppArmor"], i:["MAC vs DAC","SELinux Modes (Enforcing/Permissive)","SELinux Contexts","AppArmor Profiles","Troubleshooting Denials","🔧 Lab: Enable & Configure SELinux"]},
+  { t:"Phase 20 — Log Analysis & Auditing", note:"Detect and investigate suspicious activity via system logs.", tools:["auditd","journalctl","Logwatch"], i:["auditd Rules","Audit Log Analysis","journalctl Filtering","Centralized Logging (syslog/rsyslog)","🔧 Lab: Investigate a Simulated Breach"]},
+  { t:"Phase 21 — Malware & Rootkit Detection", note:"Identify persistence mechanisms and hidden malicious processes.", tools:["rkhunter","chkrootkit","Lynis"], i:["Rootkit Fundamentals","rkhunter Scanning","chkrootkit Scanning","Lynis Security Auditing","Persistence Mechanisms","🔧 Lab: Scan a Compromised VM"]},
+  { t:"Phase 22 — Disk & File Integrity Monitoring", note:"Detect unauthorized file changes.", tools:["AIDE","Tripwire"], i:["File Integrity Monitoring Concepts","AIDE Database & Checks","Tripwire Basics","Baseline Creation","🔧 Lab: Detect a Tampered Binary"]},
+  { t:"Phase 23 — Kernel & Module Security", i:["Loadable Kernel Modules","lsmod, modprobe, insmod","Kernel Hardening Parameters (sysctl)","Disabling Unused Modules","🔧 Lab: Harden sysctl.conf"]},
+  { t:"Phase 24 — Bash", i:["Scripting","Automation","One-Liners"]},
+  { t:"Phase 25 — Vim", i:["Modal Editing","Macros","Config (.vimrc)"]},
+  { t:"Phase 26 — Cron & Systemd Timers", i:["Task Scheduling","Persistence Techniques"]},
+  { t:"Phase 27 — Netcat", i:["Port Listening","Reverse Shells","File Transfer"]},
+  { t:"Phase 28 — GTFOBins & LOLBins", i:["Living-off-the-Land Binaries","PrivEsc Techniques"]},
+  { t:"Phase 29 — Auditd", i:["Rule Writing","Real-Time Auditing"]},
+  { t:"Phase 30 — Lynis", i:["Security Auditing","Compliance Scanning"]},
+  { t:"Phase 31 — rkhunter / chkrootkit", i:["Rootkit Detection","Scheduled Scanning"]},
+  { t:"Phase 32 — AIDE", i:["File Integrity Baselines","Change Detection"]},
+  { t:"Phase 33 — iptables/nftables", i:["Packet Filtering Rules","NAT Rules"]},
+  { t:"Phase 34 — SELinux", i:["Policy Management","Context Troubleshooting"]},
+  { t:"Phase 35 — Docker on Linux", i:["Container Basics","Image Building","Container Security"]},
+  { t:"Phase 36 — Ansible", i:["Playbooks","Configuration Management","Automation at Scale"]},
+  { t:"Phase 37 — LVM & RAID", i:["Logical Volumes","Software RAID","Storage Resilience"]},
+  { t:"Phase 38 — Enterprise Linux Administration", i:["Active Directory Integration (SSSD/Winbind)","NFS & Samba File Sharing","Centralized Authentication (LDAP)","Patch Management at Scale"]},
+  { t:"Phase 39 — Cloud & Linux", i:["AWS EC2 Linux Instances","Azure Linux VMs","Cloud-init","Infrastructure as Code Basics"]},
+  { t:"Phase 40 — SIEM & Log Forwarding", i:["rsyslog Forwarding","Filebeat/Elastic Stack","Splunk Universal Forwarder","Centralized SOC Visibility"]},
+  { t:"Phase 41 — Labs", i:["TryHackMe Linux Rooms","OverTheWire Bandit","HackTheBox Linux Boxes","🔧 Full System Hardening Project"]},
+  { t:"Phase 43 — Certifications", i:[
+    {t:"Beginner", sub:["LPI Linux Essentials","CompTIA Linux+"]},
+    {t:"Intermediate", sub:["LPIC-1","RHCSA","LPIC-2"]},
+    {t:"Advanced", sub:["RHCE","LPIC-3","GIAC GCUX","OffSec OSCP"]}
+  ]},
+  { t:"Phase 44 — Linux in the Real World", i:["Server Administration","DevOps & CI/CD Pipelines","Cybersecurity & Blue Team Operations","Penetration Testing Workstations","Cloud Infrastructure","Embedded & IoT Systems"]}
+]},
+{ id:7, title:"Linux System Administration & Security — Index", sec:[
+  { t:"1. System Administration Basics", i:["User & Group Management","Filesystem Management","Process Management","Package Management","Service Management (systemd)"]},
+  { t:"2. Shell & Scripting", i:["Bash Scripting","Text Processing (grep/sed/awk)","Cron Automation","Error Handling"]},
+  { t:"3. Networking on Linux", i:["Interface Configuration","Routing Tables","DNS Resolution","Firewall Rules (iptables/nftables/ufw)"]},
+  { t:"4. Storage Management", i:["Partitions","Filesystems","LVM","RAID","Mounting & fstab"]},
+  { t:"5. Security Principles", i:["CIA Triad","Least Privilege","Defense in Depth","Attack Surface Reduction"]},
+  { t:"6. Access Control Models", i:["Discretionary Access Control (DAC)","Mandatory Access Control (MAC)","SELinux","AppArmor","POSIX ACLs"]},
+  { t:"7. Common Linux Attacks", i:["Privilege Escalation","SUID/SGID Abuse","Cron Job Hijacking","Kernel Exploits","Brute Force SSH","Rootkits & Persistence"]},
+  { t:"8. Misconfigurations & Vulnerabilities", i:["Weak File Permissions","World-Writable Files","Exposed Services","Default Credentials","Outdated Kernel Versions","Unpatched Software"]},
+  { t:"9. Hardening Checklist", i:[
+    {t:"Account Security", sub:["Disable root SSH login","Enforce strong password policy","Remove unused accounts","Configure sudo carefully"]},
+    {t:"System Hardening", sub:["Keep kernel & packages updated","Disable unused services","Enable a firewall","Enable SELinux/AppArmor"]}
+  ]},
+  { t:"10. Reconnaissance & Enumeration (Blue/Red Team)", i:["System Enumeration (uname, /etc/os-release)","Service Enumeration","Cron Enumeration","SUID Binary Discovery","Kernel Version Checks"]},
+  { t:"11. Privilege Escalation Toolset", i:[
+    {t:"LinPEAS / LinEnum", sub:["Automated enumeration scripts","Highlight likely PrivEsc vectors"]},
+    {t:"GTFOBins", sub:["Catalog of exploitable Unix binaries","Used to bypass restricted shells"]}
+  ]},
+  { t:"12. Incident Response on Linux", i:["Live Triage Commands","Log Correlation","Process & Network Snapshotting","Memory Acquisition (LiME)","Evidence Preservation"]},
+  { t:"13. Linux Pentesting Workflow", i:["Enumeration","Vulnerability Identification","Privilege Escalation","Persistence Analysis","Reporting"]}
+]},
+
+{ id:8, title:"Linux Security Principles — Deep Dive", sec:[
+  { t:"The Permission Model (Owner/Group/Other)", kind:'text', paras:[
+    "Every file and directory on Linux has three sets of permissions — <strong>Owner</strong>, <strong>Group</strong>, and <strong>Other</strong> — each of which can independently have <strong>Read (r)</strong>, <strong>Write (w)</strong>, and <strong>Execute (x)</strong> permissions. This is represented numerically in <strong>octal notation</strong> (e.g. 755, 644) or symbolically (e.g. rwxr-xr-x).",
+    "This model enforces access control at the filesystem level and is the foundation for the vast majority of Linux security decisions. Misconfigured permissions — files that are world-writable, or executables with excessive rights — are among the most common root causes of privilege escalation."
+  ]},
+  { t:"SUID, SGID, and the Sticky Bit", kind:'text', paras:[
+    "The <strong>SUID (Set User ID)</strong> bit, when set on an executable, causes the program to run with the privileges of the file's owner rather than the user who executed it. This is how programs like passwd allow ordinary users to modify a root-owned file safely — but a misconfigured SUID binary can be a direct path to root.",
+    "The <strong>SGID (Set Group ID)</strong> bit behaves similarly but for group ownership, and when applied to a directory, causes new files created within it to inherit the directory's group.",
+    "The <strong>Sticky Bit</strong>, commonly applied to shared directories like /tmp, ensures that only the file's owner (or root) can delete or rename it, even if other users have write access to the directory."
+  ]},
+  { t:"sudo and Privilege Escalation Controls", kind:'text', paras:[
+    "<strong>sudo</strong> allows a permitted user to execute a command as another user — typically root — as defined in the <strong>/etc/sudoers</strong> file. Properly configured, sudo enforces the principle of least privilege by granting only the specific commands a user needs.",
+    "Misconfigured sudo rules — such as allowing a user to run an editor, interpreter, or archiving tool as root with NOPASSWD — are a leading cause of Linux privilege escalation. Security teams should routinely audit sudoers entries against tools like GTFOBins, which catalogs binaries that can be abused to break out to a root shell when granted excessive sudo or SUID rights."
+  ]},
+  { t:"Defense in Depth on Linux", kind:'text', paras:[
+    "Just as in network security, Linux hardening relies on layering multiple independent controls so that a failure in one layer does not lead to full compromise."
+  ], list:[
+    "Account hardening (strong passwords, key-based SSH, disabled root login)",
+    "Filesystem permissions and ACLs",
+    "Mandatory Access Control (SELinux/AppArmor)",
+    "Host-based firewalling (iptables/nftables/ufw)",
+    "Patch management and kernel updates",
+    "File integrity monitoring (AIDE/Tripwire)",
+    "Centralized logging and auditing (auditd, journald, SIEM forwarding)",
+    "Rootkit/malware scanning (rkhunter, chkrootkit, Lynis)",
+    "A hardened, monitored Linux host is significantly harder to compromise and easier to investigate after an incident, which is why Linux hardening remains a core skill for both system administrators and security engineers."
+  ]}
+]}
+];
+// ---------- render ----------
+const main = document.getElementById('main');
+const tocGrid = document.getElementById('tocGrid');
+let sectionCount = 0, topicCount = 0;
+const letters = "ABCDEFGH";
+
+PARTS.forEach((part, idx)=>{
+  sectionCount += part.sec.length;
+  part.sec.forEach(s=> topicCount += topicCountOf(s));
+
+  const partEl = document.createElement('div');
+  partEl.className = 'part';
+  partEl.id = 'part-'+part.id;
+
+  const noteHTML = part.note ? `<p class="part-sub">${part.note}</p>` : '';
+
+  partEl.innerHTML = `
+    <div class="part-head"><span class="letter">${letters[idx]}</span><h2>${part.title}</h2></div>
+    ${noteHTML}
+    <div class="sections"></div>
+  `;
+
+  const secHost = partEl.querySelector('.sections');
+  part.sec.forEach(s=>{
+    const d = document.createElement('details');
+    d.className = 'section';
+    const toolsBadge = s.tools ? ` <span class="code">tools: ${s.tools.join(', ')}</span>` : '';
+    d.innerHTML = `<summary>${s.t} <span class="code">/${topicCountOf(s)} items/</span>${toolsBadge}</summary>
+      <div class="section-body">${bodyHTML(s)}</div>`;
+    secHost.appendChild(d);
+  });
+
+  main.appendChild(partEl);
+
+  const a = document.createElement('a');
+  a.href = '#part-'+part.id;
+  a.innerHTML = `<b>${letters[idx]}</b> ${part.title}`;
+  tocGrid.appendChild(a);
+});
+
+document.getElementById('statSections').textContent = sectionCount;
+document.getElementById('statTopics').textContent = topicCount;
+
+document.getElementById('expandAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=true);
+document.getElementById('collapseAll').onclick = ()=> document.querySelectorAll('details.section').forEach(d=>d.open=false);
+
+document.getElementById('search').addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.part').forEach(part=>{
+    let partMatch = false;
+    part.querySelectorAll('details.section').forEach(d=>{
+      const text = d.textContent.toLowerCase();
+      const match = q === '' || text.includes(q);
+      d.classList.toggle('hidden', !match);
+      if(match){ d.open = q !== ''; partMatch = true; }
+    });
+    part.classList.toggle('hidden', !partMatch);
+  });
+});
+</script>
+</body>
+</html>
